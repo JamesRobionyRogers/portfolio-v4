@@ -3,13 +3,13 @@ import Image from 'next/image'
 
 const Myself = () => {
 
-    const blurb = "AWS-certified Software Engineer with experience in full-stack development, cloud infrastructure, and DevOps. Skilled in web technologies and cloud services including Python, React, Java, Docker, and AWS"
+    // const blurb = "AWS-certified Software Engineer with experience in full-stack development, cloud infrastructure, and DevOps. Skilled in web technologies and cloud services including Python, React, Java, Docker, and AWS"
 
-    const aboutMeText = [
-        "Hey 👋, I'm James. A \"Wellingtonian\" working towards making an name for myself in the tech industry. I like building applications to solve problems that could be solved in a shorter time doing it manually",
-        "If I'm not at my computer you will find me on the trails exploring New Zealand on my mountain bike, by foot or by snowboard.",
-        "Check out my links below or get to know me a bit better"
-    ]
+    // const aboutMeText = [
+    //     "Hey 👋, I'm James. A \"Wellingtonian\" working towards making an name for myself in the tech industry. I like building applications to solve problems that could be solved in a shorter time doing it manually",
+    //     "If I'm not at my computer you will find me on the trails exploring New Zealand on my mountain bike, by foot or by snowboard.",
+    //     "Check out my links below or get to know me a bit better"
+    // ]
     
 
     return (

@@ -2,7 +2,6 @@ import React from 'react'
 import Image from 'next/image'
 
 import MarqueeDemoVertical from '../ui/MarqueeDemoVertical'
-import { Marquee } from '../magicui/marquee'
 
 const Header = () => {
     return (
