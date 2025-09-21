@@ -12,7 +12,7 @@ const Work = () => {
         <section className="flex flex-col gap-8 py-28 px-4 lg:px-8">
             <SectionHeading />
 
-            <ul className="grid grid-cols-2 grid-rows-1 gap-8">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 grid-rows-1 gap-8">
                 {featuredProjects.map((project) => (
                     <ProjectCard project={project} key={project.title} />
                 ))}

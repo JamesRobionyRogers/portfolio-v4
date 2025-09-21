@@ -72,7 +72,7 @@ const ProjectDetailPage = async ({ params }: { params: Promise<{ slug: string }>
   return (
     <main className="flex flex-col gap-15 min-h-screen bg-neutral-900 rounded-3xl m-4 lg:m-8 p-4 pt-28">
       <div className="relative flex justify-around gap-2">
-          <h1 className="text-8xl uppercase text-neutral-200 font-black">{project.title}</h1>
+          <h1 className="text-5xl sm:text-8xl uppercase text-neutral-200 font-black max-w-full">{project.title}</h1>
       </div>
 
       <section className="relative flex flex-col gap-15 bg-neutral-800 rounded-3xl px-4 py-6">
@@ -118,17 +118,15 @@ const ProjectDetailPage = async ({ params }: { params: Promise<{ slug: string }>
             }
           </div>
 
-          <div className="w-full h-[200px] lg:h-[clamp(600px,57vw,1200px)] rounded-lg lg:rounded-xl overflow-hidden relative">
-            <Image
-              className="object-cover"
-              src={project.image}
-              alt={`${project.title} project preview`}
-              width={1920}
-              height={1080}
-              sizes="100vw"
-            />
+          <Image
+            className="block object-cover rounded-lg lg:rounded-xl"
+            src={project.image}
+            alt={`${project.title} project preview`}
+            width={1920}
+            height={1080}
+            sizes="100vw"
+          />
 
-          </div>
         </div>
 
         {/* <img

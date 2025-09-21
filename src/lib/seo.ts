@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const baseUrl = "https://jamesrobionyrogers.netlify.app";
+const baseUrl = "https://jamesrobionyrogers.com";
 
 export const metadata: Metadata = {
     metadataBase: new URL(baseUrl),

@@ -24,8 +24,8 @@ export const projects: Project[] = [
     technologies: ["React", "TypeScript", "PWA", "CSS Modules", "Node.js"],
     type: "Web Application",
     year: 2024,
-    link: "/projects/birds-of-aotearoa",
-    github: "https://github.com/yourusername/birds-of-aotearoa"
+    link: `nzbirds.jamesrobionyrogers.com`,
+    github: "https://github.com/JamesRobionyRogers/NZBirds-FrontEnd"
   },
   {
     title: "ExifTool GUI",

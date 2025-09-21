@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { PlaneTakeoff, SendIcon } from 'lucide-react'
 
 const Navbar = () => {
 
@@ -17,7 +18,7 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 px-6 pt-2 lg:px-10 lg:pt-4 z-100">
             <ul className="flex justify-between">
-                <li className="flex justify-between gap-6">
+                <li className="hidden sm:flex justify-between gap-6">
                     <div className="flex flex-col">
                         <p className="text-lg font-semibold text-neutral-900">{location[0]}</p>
                         <p className="text-lg text-neutral-400">{location[1]}</p>
@@ -35,12 +36,13 @@ const Navbar = () => {
                     {/* <Link className="text-lg font-semibold text-neutral-900" href="/blog">Blog</Link> */}
                 </li>
 
-                <li>
+                <li className="">
                     <a 
-                        className="flex flex-col item-center px-4 py-2 leading-11 text-white font-semibold text-lg bg-neutral-900 rounded-full ring-1 ring-neutral-800" 
-                        href="mailto:james.robionyrogers@yahoo.co.nz"
+                        className="flex flex-col item-center justify-around p-2 sm:px-4 sm:py-2 leading-5 sm:leading-11 text-white font-semibold text-md sm:text-lg bg-neutral-900 rounded-full ring-1 ring-neutral-800" 
+                        href="mailto:james@jamesrobionyrogers.com"
                     >
-                        Message me!
+                        <span className="hidden sm:flex">Message me!</span>
+                        <SendIcon className="size-4 sm:hidden" />
                     </a>
                 </li>
             </ul>

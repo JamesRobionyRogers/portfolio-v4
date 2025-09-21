@@ -46,9 +46,9 @@ const CTA = () => {
                     <p className="text-white text-2xl font-semibold">{time}</p>
                 </div>
 
-                <div className="flex flex-col gap-5 items-center pt-28">
-                    <h2 className="mx-auto text-white text-7xl font-semibold leading-1">Lets develop</h2>
-                    <h2 className="mx-auto text-neutral-400 text-7xl font-semibold">something awesome together</h2>
+                <div className="flex flex-col gap-8 items-center pt-28">
+                    <h2 className="mx-auto text-white text-5xl sm:text-6xl md:text-7xl font-semibold leading-1">Let&apos;s develop</h2>
+                    <h2 className="mx-auto text-neutral-400 text-3xl sm:text-5xl md:text-7xl text-center font-semibold ">something awesome <span className="hidden sm:inline-block">together</span></h2>
                 </div>
                 
                 <div className="flex flex-col p-4 lg:p-8 lg:px-20">
@@ -58,13 +58,13 @@ const CTA = () => {
                             <h3 className="font-semibold text-lg text-neutral-500 leading-[1]" >Contact:</h3>
                             <a 
                                 className="text-lg text-neutral-50 hover:underline transition-all duration-800 ease-in-out" 
-                                href="mailto:james.robionyrogers@yahoo.co.nz"
+                                href="mailto:james@jamesrobionyrogers.com"
                             >
-                                james.robionyrogers@yahoo.co.nz
+                                james@jamesrobionyrogers.com
                             </a>
                         </div>
 
-                        <div className="flex flex-col gap-2 mb-4 min-w-xsm">
+                        <div className="hidden sm:flex flex-col gap-2 mb-4 min-w-xsm">
                             <h3 className="font-semibold text-lg text-neutral-500 leading-[1]" >Availability:</h3>
                             <div className="flex items-center gap-2">
                                 <div className="relative size-2">
@@ -78,7 +78,7 @@ const CTA = () => {
                             </div>
                         </div>
 
-                        <div className="relative w-full h-full max-w-100">
+                        <div className="hidden sm:block relative w-full h-full max-w-100">
                             <Image 
                                 className="absolute w-full h-auto rounded-lg top-2/5 hover:top-1/4 transition-all ease-in-out duration-300 cursor-pointer"
                                 src="/CV_JamesRobionyRogers.png"
@@ -95,7 +95,25 @@ const CTA = () => {
 
                     </div>
 
-                    <hr className=""/> 
+                    <div className="">
+                        <hr className=""/> 
+                        <div className="px-4">
+                            <div className="block sm:hidden relative w-full h-[200px] max-w-100 overflow-hidden">
+                                <Image
+                                    className="absolute w-full h-auto rounded-lg bottom-2/5 hover:bottom-1/4 transition-all ease-in-out duration-300 cursor-pointer"
+                                    src="/CV_JamesRobionyRogers.png"
+                                    alt="Download CV"
+                                    sizes='100wv'
+                                    width={64}
+                                    height={64}
+                                    onClick={() => {
+                                        window.open('/CV_JamesRobionyRogers.pdf', '_blank');
+                                    }}
+                                    />
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* <div className="relative mt-auto h-30 blur-md">

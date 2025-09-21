@@ -49,18 +49,20 @@ const ShowcaseImage = ({imagePath}: {imagePath: string}) => {
 export function MarqueeDemoVertical() {
     return (
         
-        <div className="absolute flex flex-row items-center justify-center w-[120%] -rotate-12 bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 border-2 overflow-hidden">
-            <Marquee vertical repeat={6} className="[--duration:40s] pl-2 pr-1">
+        <div className="absolute flex flex-row items-center justify-center w-full sm:w-[120%] sm:-rotate-12 bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 sm:border-2 overflow-hidden">
+            <Marquee vertical repeat={6} className="hidden sm:flex [--duration:40s] pl-2 pr-1">
                 {images[0].map((imagePath, index) => (
                     <ShowcaseImage key={index} imagePath={imagePath} />
                 ))}
             </Marquee>
-            <Marquee reverse vertical repeat={6} className="[--duration:40s] p-1">
+
+            <Marquee reverse vertical repeat={6} className="[--duration:40s] p-1 -mr-2">
                 {images[1].map((imagePath, index) => (
                     <ShowcaseImage key={index} imagePath={imagePath} />
                 ))}
             </Marquee>
-            <Marquee vertical repeat={6} className="[--duration:40s] pl-1 pr-2">
+
+            <Marquee vertical repeat={6} className="hidden sm:flex [--duration:40s] pl-1 pr-2">
                 {images[2].map((imagePath, index) => (
                     <ShowcaseImage key={index} imagePath={imagePath} />
                 ))}
