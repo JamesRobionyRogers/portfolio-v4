@@ -35,7 +35,7 @@ const Myself = () => {
                     />
                     <Image
                         className="mx-auto aspect-[3/4] w-[90%] mt-6 max-w-sm rounded-lg object-cover shadow-lg absolute rotate-6 -right-1/5 group-hover:-right-1/2 group-hover:rotate-10 transition-all ease-in-out duration-400"
-                        src="/images/assets/right-selfportrate.jpg"
+                        src="/images/assets/right-selfportrate.JPG"
                         alt="Picture of James"
                         width={500} height={500}
                     />
