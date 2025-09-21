@@ -1,9 +1,8 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { getProjectBySlug, getAllProjectSlugs } from '@/lib/projects'
-import { Project } from '@/types/project'
 
 // Generate static params for all project slugs
 export async function generateStaticParams() {
@@ -14,8 +13,9 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
   
   if (!project) {
     return {
@@ -42,27 +42,28 @@ const TechnologyBadge = ({ tech }: { tech: string }) => (
 )
 
 // Back to Project navigation component 
-const BackToProjects = () => {
-    return (
-        <div className="px-4 lg:px-8 py-6">
-            <div className="max-w-7xl mx-auto">
-                <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Back to Projects
-                </Link>
-            </div>
-        </div>
-    )
-}
+// const BackToProjects = () => {
+//     return (
+//         <div className="px-4 lg:px-8 py-6">
+//             <div className="max-w-7xl mx-auto">
+//                 <Link
+//                     href="/projects"
+//                     className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+//                 >
+//                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+//                     </svg>
+//                     Back to Projects
+//                 </Link>
+//             </div>
+//         </div>
+//     )
+// }
 
 // Project Detail Page
-const ProjectDetailPage = ({ params }: { params: { slug: string } }) => {
-  const project = getProjectBySlug(params.slug)
+const ProjectDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     notFound()
