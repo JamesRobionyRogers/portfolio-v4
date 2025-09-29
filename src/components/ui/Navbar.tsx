@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { PlaneTakeoff, SendIcon } from 'lucide-react'
+import { SendIcon } from 'lucide-react'
 
 const Navbar = () => {
 

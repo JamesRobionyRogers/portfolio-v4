@@ -9,6 +9,15 @@
   /* Add fallbacks if desired */
 }
 
+.text-w-full {
+  text-align: justify
+}
+
+.text-w-full::after {
+  display: inline-block;
+  width: 100%;
+}
+
 /*
 :root {
   --background: #ffffff;
