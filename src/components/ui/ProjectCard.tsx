@@ -68,7 +68,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
             className="absolute inset-0 w-full h-full opacity-70 pointer-events-none [border-radius:var(--border-radius)] [background-image:linear-gradient(0deg,var(--color-dark),#00000040_50%,#00000040)]"
           ></div>
           <Image
-            src={project.images[0]}
+            src={project.featuredImage}
             alt={project.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
@@ -123,7 +123,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
     >
       <div className="relative aspect-4/3 overflow-hidden rounded-lg">
         <Image
-          src={project.images[0]}
+          src={project.featuredImage}
           alt={project.title}
           fill
           className="object-cover transition-all duration-800 group-hover:scale-110 group-hover:blur-[5px] "

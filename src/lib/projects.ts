@@ -4,6 +4,7 @@ import { Project } from "@/types/project";
 export const projects: Project[] = [
   {
     title: "TailorWrite",
+    featuredImage: "/images/projects/tailorwrite/landing.png",
     images: [
       "/images/projects/tailorwrite/landing.png",
       "/images/projects/tailorwrite/login.png",
@@ -23,6 +24,7 @@ export const projects: Project[] = [
   },
   {
     title: "Birds of Aotearoa",
+    featuredImage: "/images/projects/birdsofaotearoa/projectscreenshot.png",
     images: ["/images/projects/birdsofaotearoa/projectscreenshot.png"],
     icon: "",
     description: "Interactive field guide for New Zealand birds with identification features and habitat information.",
@@ -36,6 +38,7 @@ export const projects: Project[] = [
   },
   {
     title: "ExifTool GUI",
+    featuredImage: "/images/projects/exiftoolgui/projectscreenshot.png",
     images: ["/images/projects/exiftoolgui/projectscreenshot.png"],
     icon: "/images/projects/exiftoolgui/app-icon.png",
     description: "User-friendly graphical interface for ExifTool, making metadata management accessible to photographers.",
@@ -48,6 +51,7 @@ export const projects: Project[] = [
   },
   {
     title: "Run It Twice",
+    featuredImage: "/images/projects/runittwice/projectscreenshot.png",
     images: ["/images/projects/runittwice/projectscreenshot.png"],
     icon: "",
     description: "Code execution platform that runs code twice to detect non-deterministic behavior and race conditions.",
@@ -60,9 +64,10 @@ export const projects: Project[] = [
   },
   {
     title: "FHCL",
+    featuredImage: "/images/projects/fhcl/projectscreenshot.png",
     images: [
-      "/images/projects/fhcl/projectscreenshot.png",
       "/images/projects/fhcl/overview.png",
+      "/images/projects/fhcl/projectscreenshot.png",
       "/images/projects/fhcl/services.png",
       "/images/projects/fhcl/process.png",
     ],

@@ -1,5 +1,6 @@
 export type Project = {
     title: string;
+    featuredImage: string; 
     images: (string | string[])[];
     icon: string;
     description: string;

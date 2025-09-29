@@ -10,13 +10,13 @@ interface SmallProjectCardProps {
 const SmallProjectCard = ({ project, className = "" }: SmallProjectCardProps) => {
   return (
     <Link 
-      href={project.link} 
+      href={project.link ?? ''} 
       className={`flex flex-col gap-4 lg:gap-5 px-3 lg:px-4 pt-3 lg:pt-4 pb-5 lg:pb-6 rounded-xl lg:rounded-2xl bg-neutral-900 cursor-pointer group relative hover:bg-neutral-800 transition-colors ${className}`}
     >
       {/* Project Image */}
       <div className="relative aspect-video rounded-lg overflow-hidden">
         <Image
-          src={project.image}
+          src={project.featuredImage}
           alt={project.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
