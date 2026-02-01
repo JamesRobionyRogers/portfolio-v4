@@ -1,5 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
+import { Marquee } from '../magicui/marquee'
+import { Python, React as ReactIcon, Java, Docker, AWS, Go, Kubernetes, Terraform, NodeJs, TypeScript } from "developer-icons";
 
 const Myself = () => {
 
@@ -17,11 +19,12 @@ const Myself = () => {
             
             <div className="flex flex-col items-center col-span-12 lg:col-span-6">
                 <h2 className="uppercase block w-full text-2xl mb-4 font-semibold leading-[1.2] text-center md:text-left">Myself</h2>
-                <p className="text-5xl font-semibold leading-14 text-center md:text-left">
+                <p className="text-5xl font-semibold leading-14 text-center md:text-left"> 
                     {/* {blurb} */}
-                    AWS-certified Software Engineer with experience in full-stack development, cloud infrastructure, and DevOps. 
-                    <br className="mb-4"/> 
-                    Skilled in web technologies and cloud services including Python, React, Java, Docker, and AWS
+                    AWS-certified Software Engineer currently working in industry building out backend services in Go. 
+                    <br/> <br/> 
+                    
+                    I have experience in full-stack development, cloud infrastructure, and DevOps. 
                 </p>
             </div>
 
@@ -51,6 +54,45 @@ const Myself = () => {
                     </p>
                 </div>
             </div>
+
+            <Marquee
+                className="col-span-12 -mb-10 mt-10 -mx-8"
+                pauseOnHover={false}
+                repeat={3}
+            >
+                <span className="text-3xl font-medium mx-4">
+                    <Python className="inline size-14 mr-2 mb-1" />
+                    Python
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <Go className="inline size-14 mr-2 mb-1" />
+                    Go
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <ReactIcon className="inline size-14 mr-2 mb-1" />
+                    React
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <Java className="inline size-14 mr-2 mb-1" />
+                    Java
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <Docker className="inline size-14 mr-2 mb-1" />
+                    Docker
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <AWS className="inline size-14 mr-2 mb-1" />
+                    AWS
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <Terraform className="inline size-14 mr-2 mb-1" />
+                    Terraform
+                </span>
+                <span className="text-3xl font-medium mx-4">
+                    <TypeScript className="inline size-14 mr-2 mb-1" />
+                    TypeScript
+                </span>
+            </Marquee>
         </section>
     )
 }

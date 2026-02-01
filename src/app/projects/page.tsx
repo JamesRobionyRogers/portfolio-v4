@@ -41,8 +41,8 @@ const ProjectsPage = () => {
 
         {/* Second and third projects */}
         <div className="col-span-4 flex flex-col gap-4 justify-between">
-          <ProjectCard project={projects[1]} variant="compact" />
           <ProjectCard project={projects[2]} variant="compact" />
+          <ProjectCard project={projects[4]} variant="compact" />
         </div>
       </div>
 

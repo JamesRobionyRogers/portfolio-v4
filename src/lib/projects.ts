@@ -125,6 +125,6 @@ export function getAllProjects(): Project[] {
 
 export function getFeaturedProjects(limit: number = 3): Project[] {
   if (limit <= 1)         return [projects[0]] 
-  else if (limit == 2)    return [projects[0], projects[1]]
-  else                    return [projects[0], projects[1], projects[2]]
+  else if (limit == 2)    return [projects[0], projects[2]]
+  else                    return [projects[0], projects[2], projects[1]]
 } 
