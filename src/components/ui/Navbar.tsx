@@ -36,15 +36,6 @@ const Navbar = () => {
                     <Link className="text-lg font-semibold text-neutral-900" href="/blog">Blog</Link>
                 </li>
 
-                {/* <li className="">
-                    <a 
-                        className="flex flex-col item-center justify-around p-2 sm:px-4 sm:py-2 leading-5 sm:leading-11 text-white font-semibold text-md sm:text-lg bg-neutral-900 rounded-full ring-1 ring-neutral-800" 
-                        href="mailto:james@jamesrobionyrogers.com"
-                    >
-                        <span className="hidden sm:flex">Message me!</span>
-                        <SendIcon className="size-4 sm:hidden" />
-                    </a>
-                </li> */}
             </ul>
         </nav>
     )

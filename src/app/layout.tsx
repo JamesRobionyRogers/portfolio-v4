@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import "./globals.css";
 
 import Navbar from "@/components/ui/Navbar";
-import CTA from '@/components/sections/CTA'
+// import CTA from '@/components/sections/CTA'
 import Footer from '@/components/sections/Footer'
 
 const saans = localFont({
@@ -34,7 +34,7 @@ export default function RootLayout({
 					{children} 
 				</main>
                 
-                <CTA />
+                {/* <CTA /> */}
                 <Footer />  
 
             </body>

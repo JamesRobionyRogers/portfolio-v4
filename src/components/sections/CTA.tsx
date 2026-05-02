@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 const CTA = () => {
 
+    const email = ""
     const location = "Wellington, New Zealand";
     const [time, setTime] = useState("");
     const [currentMonth, setCurrentMonth] = useState("")
@@ -58,9 +59,9 @@ const CTA = () => {
                             <h3 className="font-semibold text-lg text-neutral-500 leading-[1]" >Contact:</h3>
                             <a 
                                 className="text-lg text-neutral-50 hover:underline transition-all duration-800 ease-in-out" 
-                                href="mailto:james@jamesrobionyrogers.com"
+                                href={`mailto:${email}`}
                             >
-                                james@jamesrobionyrogers.com
+                                {email}
                             </a>
                         </div>
 
