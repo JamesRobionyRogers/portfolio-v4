@@ -10,19 +10,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const project = getProjectBySlug(slug)
 
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-    }
-  }
 
   return {
-    title: `${project.title} - Project Details`,
-    description: project.description,
+    title: `Projects`,
+    description: 'Explore my portfolio of projects.',
     openGraph: {
-      title: project.title,
-      description: project.description,
-      images: project.images,
+      title: `Projects`,
+      description: 'Explore my portfolio of projects.',
+      images: [],
     },
   }
 }
