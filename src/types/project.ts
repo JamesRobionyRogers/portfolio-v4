@@ -13,4 +13,6 @@ export type Project = {
     link?: string;  
     github?: string;
     testimonial? : {name: string, company?: string, comment: string}
+    video?: string; // NEW: primary video source
+    featured?: boolean; // NEW: explicit featured control
 };

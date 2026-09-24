@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { Marquee } from '../magicui/marquee'
-import { Python, React as ReactIcon, Java, Docker, AWS, Go, Kubernetes, Terraform, NodeJs, TypeScript } from "developer-icons";
+import { Python, React as ReactIcon, Java, Docker, AWS, Go, Terraform, TypeScript } from "developer-icons";
 
 const Myself = () => {
 

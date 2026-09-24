@@ -88,6 +88,10 @@ export const projects: Project[] = [
   }
 ];
 
+export function getProjectsFromTitles(titles: string[]) {
+    return titles.map(title => projects.find(project => project.title === title)).filter(Boolean) as Project[];
+}
+
 // Utility functions for working with projects
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find(project => 

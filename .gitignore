@@ -43,3 +43,6 @@ next-env.d.ts
 .vscode
 
 favicon.png
+
+# project files 
+*.mov
