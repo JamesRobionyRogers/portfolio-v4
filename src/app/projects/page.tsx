@@ -1,14 +1,13 @@
 import React from 'react'
 import ProjectCard from '@/components/ui/ProjectCard'
-import { getFeaturedProjects, getProjectBySlug, projects } from '@/lib/projects'
+import { getFeaturedProjects, projects } from '@/lib/projects'
 
 const featuredProjects = getFeaturedProjects()
 const allProjects = projects
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const project = getProjectBySlug(slug)
+  await params
 
 
   return {

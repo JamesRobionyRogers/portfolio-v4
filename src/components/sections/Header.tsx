@@ -1,10 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 
-import MarqueeDemoVertical from '../ui/MarqueeDemoVertical'
-
 import { BentoGrid } from '../ui/ProjectBentoGrid'
-import { getAllProjects, getProjectsFromTitles } from '@/lib/projects'
+import { /* getAllProjects, */ getProjectsFromTitles } from '@/lib/projects'
 
 function getProjectsForBentoGrid() {
     return getProjectsFromTitles([
@@ -24,7 +22,6 @@ function getProjectsForBentoGrid() {
 }
 
 const Header = () => {
-    const projects = getAllProjects();
     return (
         <section className="relative min-h-[90vh] flex flex-col justify-between px-4 lg:px-8 pt-10 sm:py-0">
             <div className="flex flex-col gap-10 sm:gap-0">

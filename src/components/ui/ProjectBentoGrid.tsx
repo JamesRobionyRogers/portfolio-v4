@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { Project } from "@/lib/projects";
+import type { Project } from "@/types/project";
 
 // ------------------ TYPES ------------------
 
@@ -95,10 +95,13 @@ const mapProjectsToLayout = (
 };
 
 // ------------------ HOOK ------------------
-const useVideoAutoPause = (ref: React.RefObject<HTMLVideoElement>) => {
+const useVideoAutoPause = (
+  ref: React.RefObject<HTMLVideoElement | null>,
+  enabled: boolean
+) => {
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
+    if (!enabled || !video) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -110,17 +113,16 @@ const useVideoAutoPause = (ref: React.RefObject<HTMLVideoElement>) => {
 
     observer.observe(video);
     return () => observer.disconnect();
-  }, [ref]);
+  }, [enabled, ref]);
 };
 
 // ------------------ COMPONENTS ------------------
 
 const Media = ({ src, isVideo, priority }: { src: string; isVideo: boolean; priority?: boolean }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  useVideoAutoPause(videoRef, isVideo);
 
   if (isVideo) {
-    useVideoAutoPause(videoRef);
-
     return (
       <video
         ref={videoRef}
