@@ -1,0 +1,299 @@
+# Design System
+
+The design system for the portfolio site. It takes the visual identity already in the code (light neutral canvas, dark ink cards, Saans, oversized uppercase display type, the year-range motif) and replaces the one-off Tailwind classes with named tokens and components. Every rule is written mobile-first.
+
+**Out of scope:** the blog (`/blog`, MDX, `TableOfContents`). It is being redesigned separately. It should adopt these tokens when that happens, but nothing here documents its current look.
+
+## Principles
+
+1. **Mobile-first.** Unprefixed classes are for a 320px screen. Use `sm:`, `md:` and `lg:` only to scale up. If a layout only works because of `overflow-x-hidden`, it is broken.
+2. **Two surfaces, strong contrast.** A light canvas holds dark ink cards. Anything placed on either surface must meet WCAG AA on it.
+3. **Type carries the brand.** Display headings are huge, uppercase and tight. Everything else is quiet, so the display type stands out.
+4. **Tokens, not values.** Components use semantic tokens (`bg-canvas`, `text-ink-muted`) and never raw `neutral-*`, `gray-*`, hex or arbitrary values.
+5. **One component per pattern.** Buttons, tags, headings and section wrappers each have exactly one implementation.
+
+## Tokens
+
+Define these in `src/app/globals.css` under `@theme`. Tailwind v4 generates the utilities, e.g. `--color-canvas` gives you `bg-canvas`, `text-canvas` and `border-canvas`.
+
+### Colour
+
+Every colour is from the Tailwind `neutral` scale, plus one blue accent and the green selection highlight. Do not use the `gray` scale.
+
+| Token | Value | Use |
+|---|---|---|
+| `canvas` | `neutral-100` `#f5f5f5` | Page background |
+| `canvas-sunken` | `neutral-200` `#e5e5e5` | Trays that group cards (e.g. the featured bento) |
+| `fg` | `neutral-900` `#171717` | Primary text on the canvas |
+| `fg-muted` | `neutral-600` `#525252` | Secondary text on the canvas (nav status, captions). Replaces `neutral-400`, which fails AA |
+| `ink` | `neutral-900` `#171717` | Dark surfaces: cards, the project detail shell, the CTA panel |
+| `ink-raised` | `neutral-800` `#262626` | A panel nested inside `ink`, and chips on `ink` |
+| `ink-fg` | `neutral-50` `#fafafa` | Primary text on `ink` |
+| `ink-muted` | `neutral-300` `#d4d4d4` | Body text on `ink` |
+| `ink-subtle` | `neutral-400` `#a3a3a3` | Meta and labels on `ink`. Only on `ink`, never on the canvas |
+| `accent` | `blue-700` `#1d4ed8` | Links and hover on the canvas (the footer). Replaces `blue-400` there, which is about 2.5:1 |
+| `accent-on-ink` | `blue-400` `#60a5fa` | Hover accent on `ink` (card titles) |
+| `focus` | `blue-600` `#2563eb` | Focus ring on every surface |
+| `highlight` | `green-400 / 40%` | `::selection` background. This is the site's signature detail, so keep it |
+
+Rules:
+
+- Pick text colours by the surface they sit on. `fg*` goes on `canvas` and `ink-*` goes on `ink`. Do not mix them.
+- Only one accent hue (blue). Remove `sky-*` and any second accent.
+- Delete the unused shadcn tokens (`chart-*`, `sidebar-*`, `popover`, `destructive`) and the `.dark` block, unless dark mode actually ships. If dark mode ships, the canvas becomes `neutral-950` and ink surfaces become `neutral-900`, with the same token names.
+
+### Typography
+
+- **Family:** Saans only, loaded with `next/font/local`, exposed as `--font-sans`, and set as the default family.
+- **Weights:** 500 (medium), 600 (semibold), 700 (bold). Those are the only files that exist. Do not use `font-black`: there is no 900 file, so it renders as 700.
+- **Remove** the Google Fonts `@import` of Inter and `--font-title`. Nothing uses them, and they block rendering on mobile.
+
+Type scale (fluid sizes use `clamp()` and are safe from 320px up):
+
+| Role | Classes | Notes |
+|---|---|---|
+| `display` | `text-[clamp(2.75rem,12vw,12.5rem)] font-bold uppercase leading-[0.85] tracking-tight` | One per page at most. Used for the home "WORK" row |
+| `h1` / page title | `text-[clamp(2.5rem,10vw,6rem)] font-bold uppercase leading-[0.9] tracking-tight break-words` | "Featured Projects" and project titles. Replaces `text-8xl font-black` |
+| `h2` / section title | `text-[clamp(2rem,7vw,4.5rem)] font-bold uppercase leading-[0.9] tracking-tight` | "All Projects" |
+| `lead` | `text-2xl sm:text-4xl lg:text-5xl font-semibold leading-tight` | The about statement. Currently `text-5xl` at every width |
+| `eyebrow` | `text-sm sm:text-base font-semibold uppercase tracking-wide` | Section labels ("Myself") and meta labels (Year, Technologies) |
+| `h3` / card title | `text-lg lg:text-xl font-semibold` | |
+| `body` | `text-base leading-relaxed` | Minimum 16px for body copy and card descriptions |
+| `ui` | `text-base sm:text-lg font-semibold` | Nav and footer links |
+| `meta` | `text-sm font-medium uppercase tracking-wide` | `Type · Year` on cards |
+| `chip` | `text-sm font-medium` | Tags. 14px floor; do not use `text-xs` |
+
+Rules:
+
+- Leading is set per role. Do not use `leading-1` (in v4 that is 4px) or bare `leading-[1]`.
+- Each page has exactly one `<h1>` and headings never skip a level. How big a heading looks is set by its role class, not by which tag it is.
+- The name in the hero stays as an image, with correct alt text (`James`, `Robiony-Rogers`) and a visually hidden `<h1>James Robiony-Rogers</h1>`.
+
+### Spacing and layout
+
+| Token | Value |
+|---|---|
+| Gutter | `px-4 sm:px-6 lg:px-8`, the same on the nav, sections and footer |
+| Container | `mx-auto w-full max-w-[90rem]` (reuses the existing `max-w-8xl` value) |
+| Section rhythm | `py-16 sm:py-20 lg:py-28` |
+| Top offset under the sticky nav | `pt-24 lg:pt-28` |
+| Grid gap, card lists | `gap-4 sm:gap-6 lg:gap-8` |
+| Stack gap inside cards | `gap-2` for text runs, `gap-4` between blocks |
+| Card padding | `p-4 lg:p-6` |
+
+Rules:
+
+- Stick to the Tailwind spacing scale. Do not use `gap-15`, `mx-25`, `h-30`, `z-100` or similar off-scale values.
+- Apply padding once per level. The footer currently pads twice.
+- Grids start as one column: `grid-cols-1`, then `sm:grid-cols-2`, then `lg:grid-cols-12` with spans. The featured bento becomes `col-span-12 lg:col-span-8` and `col-span-12 lg:col-span-4`.
+- Paired layouts start stacked and go side by side at `sm` or later: `flex flex-col sm:flex-row`.
+
+### Radius
+
+| Token | Classes | Use |
+|---|---|---|
+| Card | `rounded-xl lg:rounded-2xl` | Project cards, trays |
+| Panel | `rounded-2xl lg:rounded-3xl` | Full-page ink shells (project detail, CTA) |
+| Media | `rounded-lg lg:rounded-xl` | Images inside cards and galleries |
+| Chip | `rounded-md` | Tags and badges |
+| Pill | `rounded-full` | Only glass chips over imagery, and status dots |
+
+### Elevation and effects
+
+- `shadow-lg`: photos that sit on the canvas (portraits).
+- `shadow-2xl`: the hero showcase frame only.
+- Ink cards have no shadow; the contrast with the canvas is enough.
+- **Glass:** `bg-white/20 backdrop-blur-sm text-white`. Use it only on top of an image, for chips on featured cards.
+- **Image scrim:** `bg-gradient-to-t from-black/70 via-black/10 to-transparent`. Remove the broken overlay that references `--color-dark` and `--border-radius`.
+- **Sticky nav backdrop:** `bg-canvas/80 backdrop-blur-md`.
+
+### Motion
+
+| Token | Value | Use |
+|---|---|---|
+| `fast` | `duration-200 ease-out` | Colour and underline changes |
+| `base` | `duration-300 ease-out` | Transforms, the mobile menu opening |
+| `slow` | `duration-500 ease-in-out` | Image zoom and the portrait fan-out |
+| Marquee | `--duration: 40s`, linear, infinite | The hero columns and the tech strip |
+
+Rules:
+
+- The card image hover is `group-hover:scale-105`. Drop the blur (it is expensive on mobile GPUs) and the `duration-800` variant.
+- Transition only the properties you animate (`transition-colors`, `transition-transform`), not `transition-all`.
+- **Reduced motion is required.** The marquees use `motion-safe:animate-marquee`, and there is a global fallback:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+```
+
+### Breakpoints
+
+These are the Tailwind defaults; do not add custom breakpoints.
+
+| Prefix | Min width | What changes |
+|---|---|---|
+| (none) | 0 | Single column, the mobile menu, compact type |
+| `sm` | 640px | Two-column card grids, paired rows go side by side, the inline nav appears |
+| `md` | 768px | Text alignment only (centred becomes left-aligned) |
+| `lg` | 1024px | 12-column layouts, larger gutters and radii, the hero marquee's side columns, the portrait stack |
+
+## Components
+
+Each of these lives in `src/components/ui/` as a single component. Merge class names with `cn()`, and define variants with `class-variance-authority`, which is already installed.
+
+### Container and Section
+
+- `<Container>`: the container plus the gutter.
+- `<Section>`: a `<section>` with the section rhythm, wrapping a `<Container>`. It accepts `surface="canvas" | "ink"`.
+
+### SectionHeading
+
+This is the paired row with the year motif ("Work · '24–'25", "All Projects · '23–'25").
+
+- Layout: `flex flex-wrap items-end justify-between gap-x-6 gap-y-2`. It wraps instead of overflowing.
+- The title uses the `display` or `h2` role. The year sits at the same size in `fg-muted`, or on mobile it drops to the `eyebrow` role underneath.
+- Props: `as` (the heading level), `title`, `years`.
+- Remove the leftover `line-mask` divs.
+
+### Eyebrow
+
+`<p>` or `<h2>` with the `eyebrow` role, in `fg-muted` on the canvas or `ink-subtle` on ink.
+
+### Button
+
+This site currently has no buttons. Use these for CTAs such as "See all", "View Website" and downloading the CV.
+
+| Variant | Classes |
+|---|---|
+| `primary` | `bg-ink text-ink-fg hover:bg-ink-raised` |
+| `secondary` | `border border-fg/15 text-fg hover:bg-canvas-sunken` (on ink: `border-ink-fg/15 text-ink-fg hover:bg-ink-raised`) |
+| `ghost` | `text-fg hover:underline underline-offset-4` |
+
+- Base: `inline-flex items-center justify-center gap-2 min-h-11 px-5 rounded-lg font-semibold text-base transition-colors duration-200` plus the focus ring.
+- Render it as a `<Link>` for internal routes and an `<a>` for external ones. Use a `<button>` only for actions.
+- Put arrow glyphs (→ ↗ ↓) in `<span aria-hidden="true">`.
+
+### TextLink
+
+- Base: `inline-flex items-center gap-1 min-h-11 font-semibold underline-offset-4 hover:underline` plus the focus ring.
+- Tone `default`: `text-fg`. Tone `accent`: `text-accent`. Tone `on-ink`: `text-ink-subtle hover:text-ink-fg`.
+- Every external link gets `target="_blank" rel="noopener noreferrer"` and a trailing `↗`.
+- Internal links always use `next/link`.
+
+### Tag
+
+One style that replaces the five that exist now.
+
+- `on-ink` (default): `inline-flex items-center px-2.5 py-1 rounded-md bg-ink-raised text-ink-muted` plus the `chip` role.
+- `glass`: `rounded-full bg-white/20 backdrop-blur-sm text-white`, only on featured cards over images.
+- `TagList`: shows `max` tags (2 compact, 3 default, 4 featured), then `+N more`. Uses `flex flex-wrap gap-2`.
+
+### ProjectCard
+
+A single component with variants `default`, `compact` and `featured`. Delete `SmallProjectCard` and the commented-out copy in `Work.tsx`.
+
+- Shell: `group block bg-ink rounded-xl lg:rounded-2xl overflow-hidden` plus the focus ring (the whole card is the link).
+- Title: the `h3` role, `text-ink-fg group-hover:text-accent-on-ink transition-colors duration-200`.
+- The meta line always reads `{type} · {year}`, using the `meta` role in `ink-subtle`.
+- The title row is `flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1`, with `shrink-0` on the meta.
+- Description: the `body` role in `ink-muted`, clamped with `line-clamp-3`.
+- Media is `aspect-4/3` with the media radius and `group-hover:scale-105` at the `slow` timing.
+- **Featured on mobile:** below `sm` the text stacks under the image (`relative sm:absolute`) so it is never clipped. The overlay layout and scrim apply from `sm` up.
+- The `sizes` values must match the rendered width (e.g. `sizes="24px"` for icons).
+
+### Navbar
+
+- Wrapper: `<header>` with `sticky top-0 z-50 bg-canvas/80 backdrop-blur-md` plus the gutter and `py-3`. It sits outside `<main>`.
+- **Mobile (below `sm`):**
+  - The brand or "Home" link is on the left and a 44×44 menu button on the right, with `aria-expanded` and `aria-controls`.
+  - The menu is a full-screen sheet in `bg-canvas`. Links use the `h2` role, stacked, each at least 44px tall.
+  - The status block ("NZ Based", "Working on …") sits at the bottom of the sheet.
+  - The sheet locks page scroll, traps focus, and closes on Escape, on a link tap and on route change.
+- **From `sm` up:** links sit inline, `flex gap-6 lg:gap-10`. From `lg` up the status block also shows inline, in `fg-muted`.
+- **Active route:** `aria-current="page"`, shown with `underline underline-offset-8 decoration-2`.
+- **On ink pages** (project detail), the nav keeps its canvas backdrop so its text never lands on ink.
+- Links come from `siteConfig` in `src/config/site.ts`, not hard-coded strings.
+
+### Footer
+
+- A `<footer>` with a single layer of gutter and `py-8 lg:py-10`.
+- Layout: `flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between`, with the links in `flex flex-wrap gap-x-6 gap-y-2`.
+- Links use `TextLink` with the `accent` tone and the `ui` role. The copyright reads `© {new Date().getFullYear()}`.
+- URLs come from `siteConfig`.
+
+### MetaList (project detail)
+
+- Replaces the `h3`/`h2` label-and-value pairs with `<dl>`.
+- Layout: `grid grid-cols-1 sm:grid-cols-12 gap-6`, with spans 3 / 4 / 5 from `sm` up.
+- Each `<dt>` uses the `eyebrow` role in `ink-subtle`. Each `<dd>` uses `ink-fg`.
+
+### Gallery (project detail)
+
+- A single image is full width, with the media radius and `sizes="(min-width:1024px) 90rem, 100vw"`.
+- A pair uses `grid grid-cols-1 sm:grid-cols-2 gap-4` and `sizes="(min-width:640px) 50vw, 100vw"`.
+- Every image has meaningful `alt` text.
+
+### Marquee
+
+- Keep the magicui `Marquee`. Its animation classes become `motion-safe:`.
+- **Hero on mobile:** show one column, without rotation, inside `aspect-[4/5] sm:aspect-video`.
+- **Tech strip:** items are `text-xl sm:text-3xl` with icons `size-8 sm:size-14`. Use a bleed of `-mx-4 sm:-mx-6 lg:-mx-8` to match the gutter, and build the items by mapping an array rather than repeating markup.
+
+## Mobile standards
+
+These apply to every component and page and are checked on each PR.
+
+- **Test widths:** 320, 375, 390 and 430px portrait, plus 844px landscape. Nothing may clip, overlap or scroll sideways at any of them.
+- **Tap targets:** at least 44×44px (`min-h-11 min-w-11`), with at least 8px between them. Use padding on the link itself, not on a wrapper.
+- **Type floor:** 16px for body copy, 14px for meta and chips. Display text uses `clamp()` whose minimum fits a 288px content width.
+- **Viewport height:** use `svh` or `dvh` (`min-h-[90svh]`, `min-h-svh`), never `vh` or `h-screen`.
+- **Safe areas:** set `export const viewport = { viewportFit: 'cover', themeColor: '#f5f5f5' }`. The nav and footer gutters use `max(1rem, env(safe-area-inset-left/right))`.
+- **Hover is extra:** anything shown on hover (the portrait fan-out, image zoom) must also be reachable or visible without hover. For example, show a single static portrait on mobile.
+- **Focus:** every interactive element gets `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus`, and the page starts with a skip link to `<main>`.
+- **Images:**
+  - The site is a static export to GitHub Pages, so `next/image` does not optimise anything.
+  - Pre-generate AVIF/WebP files at 640, 1024 and 1600px (a `sharp` script or `next-image-export-optimizer`).
+  - No image shipped to a phone may be over 300KB.
+  - Only the hero image gets `priority`.
+- **Motion:** honour `prefers-reduced-motion` everywhere, and never animate `blur` or `filter` on scroll or hover.
+- **Landmarks:** `<header>`, then `<main id="main">`, then `<footer>`. Never nest a `<main>`.
+
+## Voice and content
+
+- **Display headings:** ALL CAPS through CSS (`uppercase`), written in Title Case in the source.
+- **Nav and footer:** single words in Title Case (Home, Projects, Blog, LinkedIn, GitHub).
+- **Year motif:** an apostrophe followed by two digits, with an en dash for ranges: `'24–'25`, `'23–'25`. Use it the same way everywhere.
+- **CTAs:** short and casual, first person, ending in a Unicode arrow: "See all →", "View Website ↗", "View Code ↗".
+- **Tone:** plain and confident. State what was built and with what, and skip adjectives.
+
+## Migration backlog
+
+These are ordered by how much each item affects mobile users. File references are to the code as it is today.
+
+**P0: broken on phones**
+
+1. Hero marquee references missing TailorWrite images (`MarqueeDemoVertical.tsx:10-28`). Point them at the files that exist.
+2. Build the Navbar spec: add a background, a mobile menu and 44px targets. The links currently clip at 320px and disappear over ink (`Navbar.tsx:19-36`).
+3. `/projects`: the `text-8xl` headings, the bento that never stacks, and the forced side-by-side "All Projects" row (`projects/page.tsx:34-52`).
+4. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx:73-135`).
+5. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`Myself.tsx:18-22`).
+6. The footer overflows at 375px and is padded twice (`Footer.tsx:10-15`).
+7. Images of 1–5MB are served unoptimised (`fhcl/projectscreenshot.png`, `SelfPortrait.JPG`, the hero screenshots).
+8. The marquees ignore reduced motion (`globals.css:88-105`, `marquee.tsx:62-63`).
+
+**P1: usability and accessibility**
+
+9. Hero: `leading-1`, the undersized surname image and its wrong alt text, and `90vh` (`Header.tsx:8-58`).
+10. Card text under 16px/14px, the title row squeezing, and the featured card clipping its text (`ProjectCard.tsx`).
+11. Contrast: `neutral-400` and `blue-400` on the canvas. Move to `fg-muted` and `accent`.
+12. Focus ring, skip link, landmarks, one `<h1>` per page, `<dl>` for project meta.
+13. `next/link` for internal links, and `rel="noopener noreferrer"` on external ones.
+
+**P2: consistency and cleanup**
+
+14. Put the colour, type, radius and motion tokens in `globals.css`, and remove the unused shadcn and dark-mode tokens, the Inter import, `.text-w-full` and `tw-animate-css`.
+15. Build `Container`, `Section`, `SectionHeading`, `Button`, `TextLink` and `Tag`, and move the existing pages onto them.
+16. Delete `SmallProjectCard.tsx`, both `pageAI.tsx` files, and the commented-out card in `Work.tsx`.
+17. Replace the static metadata on `/projects`. Fix the missing `https://` in the Birds of Aotearoa link (`projects.ts:36`). Style `error.tsx` and add `not-found.tsx`.
