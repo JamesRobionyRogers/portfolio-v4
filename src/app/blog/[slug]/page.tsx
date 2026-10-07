@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/mdx';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import rehypePrettyCode from 'rehype-pretty-code';
 import BlogShell from '@/components/blog/BlogShell';
 import PostHeader from '@/components/blog/PostHeader';
 import TableOfContents from '@/components/blog/TableOfContents';
@@ -31,6 +32,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 const POST_BODY_ID = 'post-body';
 
+// Highlights code fences at build time; keepBackground off so blocks keep the ink-raised token
+const PRETTY_CODE_OPTIONS = { theme: 'one-dark-pro', keepBackground: false };
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const post = getBlogPostBySlug(slug);
@@ -41,7 +45,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
     const { content } = await compileMDX({
         source: post.content,
-        options: { parseFrontmatter: false },
+        options: {
+            parseFrontmatter: false,
+            mdxOptions: { rehypePlugins: [[rehypePrettyCode, PRETTY_CODE_OPTIONS]] },
+        },
     });
 
     return (
