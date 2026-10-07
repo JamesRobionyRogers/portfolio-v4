@@ -69,9 +69,9 @@
 
 /* Blog post body on the ink shell: maps the typography plugin's colours onto the tokens. Pair with `prose` */
 .prose.blog-prose {
-  --tw-prose-body: var(--color-ink-muted);
+  --tw-prose-body: var(--color-ink-fg);
   --tw-prose-headings: var(--color-ink-fg);
-  --tw-prose-lead: var(--color-ink-muted);
+  --tw-prose-lead: var(--color-ink-fg);
   --tw-prose-links: var(--color-ink-fg);
   --tw-prose-bold: var(--color-ink-fg);
   --tw-prose-counters: var(--color-ink-subtle);
@@ -104,6 +104,6 @@
   }
 
   :where(:not(pre) > code) {
-    @apply rounded-md bg-ink-raised px-1.5 py-0.5 font-medium before:content-none after:content-none;
+    @apply rounded-md bg-ink-chip px-1.5 py-0.5 font-normal box-decoration-clone before:content-none after:content-none;
   }
 }

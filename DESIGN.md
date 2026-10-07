@@ -254,17 +254,17 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 
 **Post header (`PostHeader`)**
 
-- It opens with a back link, a `Link` to `/blog` reading "← Blog" (arrow in `aria-hidden`), styled as `TextLink` with the `on-ink` tone.
-- Next comes the post `<h1>` in `ink-fg`. Post titles are long sentences, so it uses the `h2` role with `break-words` rather than the `h1` role.
-- Then a raised meta panel (`bg-ink-raised`, panel radius, `p-4 lg:p-6`), laid out like project detail's MetaList: a `<dl>` in `grid grid-cols-1 sm:grid-cols-12 gap-6`.
-- The panel's entries are Published (span 3), Tags (span 4, `TagList variant="on-raised"`) and Summary (span 5). Each `<dt>` uses the `eyebrow` role in `ink-subtle`.
-- The cover image closes the panel: `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
+- The post page tightens the shell to `px-4 lg:px-6 pt-16 lg:pt-20 pb-8 lg:pb-12` and `gap-8 lg:gap-12`, because long-form text needs the width more than the frame does. Project detail keeps the default shell.
+- It opens with a breadcrumb: a `<nav aria-label="Breadcrumb">` holding a `Link` to `/blog`, then `/`, then the post title (`aria-current="page"`, `truncate`). The breadcrumb text is `text-sm font-medium text-ink-subtle`, and the link has `min-h-11` and the focus ring.
+- Next comes the post `<h1>`, sentence case: `text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight break-words text-ink-fg`. Post titles are full sentences, so they skip the uppercase `h1` role.
+- Below the title, a row holds the date (`PostDate` in `ink-subtle`) and the full `TagList`: `flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6`.
+- The cover image comes last: `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
 
 **Prose**
 
-- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-muted` body, `ink-fg` headings, links and bold, `ink-raised` rules and code backgrounds.
+- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-fg` body, headings, links and bold, and `ink-raised` rules and code-block backgrounds.
 - Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent-on-ink` on hover and get the focus ring.
-- Images get the media radius. Inline code sits on `ink-raised` with no backticks.
+- Images get the media radius. Inline code is a chip, `bg-ink-chip rounded-md px-1.5 py-0.5`, with no backticks. `ink-raised` is too close to `ink` to read.
 - The body keeps `prose`'s `65ch` measure and `break-words` so long URLs and inline code never overflow at 320px.
 - Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
 
