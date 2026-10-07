@@ -293,7 +293,7 @@ These are ordered by how much each item affects mobile users. File references ar
 3. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx`).
 4. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`home/About.tsx`).
 5. The footer overflows at 375px and is padded twice (`layout/Footer.tsx`).
-6. Images of 1–5MB are served unoptimised (`fhcl/projectscreenshot.png`, `SelfPortrait.JPG`, the hero screenshots).
+6. Images are one WebP each, with no `srcset`. Add 640/1024/1600px variants (and AVIF) to `scripts/optimise-images.mjs`, and get `left-selfportrate.webp` (345KB) under 300KB.
 7. BentoGrid: the mobile stack is permanently `hidden` and the 13-column grid renders at every width, so phones get thumbnail-sized tiles and every video (`projects/ProjectBentoGrid.tsx`).
 
 **P1: usability and accessibility**

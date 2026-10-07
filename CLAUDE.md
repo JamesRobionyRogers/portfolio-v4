@@ -27,8 +27,8 @@ Personal portfolio at `jamesrobionyrogers.com`. Next.js App Router, Tailwind v4,
 
 - The build is a static export (`output: 'export'` in `next.config.ts`). No API routes, server actions, middleware or runtime `headers()`/`cookies()`.
 - Every dynamic route needs `generateStaticParams`, or the Pages build fails.
-- Images are served unoptimised, so `next/image` does no resizing. Compress images before adding them to `public/`.
-- Image paths are case-sensitive on Pages but not on macOS. Match the filename casing exactly (`SelfPortrait.JPG`).
+- Images are served unoptimised, so `next/image` does no resizing. Run `npm run optimise-images` after adding images to `public/`, then reference the `.webp` it writes.
+- Image paths are case-sensitive on Pages but not on macOS. Match the filename casing exactly (`SelfPortrait.webp`, `right-selfportrate.webp`).
 - Saans ships only weights 500, 600 and 700 (`src/app/fonts/`). `font-black` renders as 700 and `font-normal` as 500.
 - In Tailwind v4, `leading-1` means 4px of line height, not `line-height: 1`.
 - External project links in `projects.ts` need the `https://` prefix, or they resolve as relative paths.
