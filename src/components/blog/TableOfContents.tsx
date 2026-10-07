@@ -73,7 +73,7 @@ export default function TableOfContents({ containerId }: { containerId: string }
               aria-current={activeId === heading.id ? 'location' : undefined}
               className={cn(
                 'flex items-center min-h-11 py-1 text-base transition-colors duration-200 hover:text-ink-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus',
-                activeId === heading.id ? 'text-ink-fg underline underline-offset-4 decoration-2' : 'text-ink-subtle'
+                activeId === heading.id ? 'text-ink-fg underline underline-offset-4 decoration-2 color-blue-400' : 'text-ink-subtle'
               )}
             >
               {heading.text}
