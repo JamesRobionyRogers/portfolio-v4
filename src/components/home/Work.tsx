@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import ProjectCard from '../ui/ProjectCard';
+import ProjectCard from '@/components/projects/ProjectCard';
 import { getFeaturedProjects } from '@/lib/projects';
 
 const featuredProjects = getFeaturedProjects(2)
@@ -19,7 +19,7 @@ const Work = () => {
             </ul>
 
             
-            <Link className="text-center text-xl mt-8 font-semibold text-neutral-900" href="/projects">See all →</Link>
+            <Link className="text-center text-xl mt-8 font-semibold text-fg" href="/projects">See all →</Link>
 
         </section>
     )

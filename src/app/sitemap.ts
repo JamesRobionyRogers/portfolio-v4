@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/config/site";
+import { siteConfig } from "@/config/site";
 import { getAllProjectSlugs } from "@/lib/projects";
 import { getAllBlogSlugs } from "@/lib/mdx";
 
@@ -14,5 +14,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getAllBlogSlugs().map((slug) => `/blog/${slug}`),
   ];
 
-  return paths.map((path) => ({ url: `${siteUrl}${path}` }));
+  return paths.map((path) => ({ url: `${siteConfig.url}${path}` }));
 }

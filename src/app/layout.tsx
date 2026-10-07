@@ -1,23 +1,42 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from 'next/font/local';
 import "./globals.css";
 
-import Navbar from "@/components/ui/Navbar";
-// import CTA from '@/components/sections/CTA'
-import Footer from '@/components/sections/Footer'
+import Navbar from "@/components/layout/Navbar";
+import Footer from '@/components/layout/Footer'
+import { siteConfig } from "@/config/site";
 
+// Saans is a trial licence; only these three weights exist
 const saans = localFont({
     src: [
-        { path: './fonts/Saans Bold-TRIAL.woff2', weight: '700', style: 'normal' },
-        { path: './fonts/Saans SemiBold-TRIAL.woff2', weight: '600', style: 'normal' },
-        { path: './fonts/Saans Medium-TRIAL.woff2', weight: '500', style: 'normal' }
+        { path: './fonts/saans-700.woff2', weight: '700', style: 'normal' },
+        { path: './fonts/saans-600.woff2', weight: '600', style: 'normal' },
+        { path: './fonts/saans-500.woff2', weight: '500', style: 'normal' }
     ],
-    variable: '--font-saans', // Optional, for using CSS variable
+    variable: '--font-saans',
 });
 
 export const metadata: Metadata = {
-    title: "James Robiony-Rogers",
-    description: "James Robiony-Rogers is a Software Engineer based out of Wellington, New Zealand. James has experience in full-stack development, cloud engineering and DevOps practices.",
+    metadataBase: new URL(siteConfig.url),
+    title: {
+        default: siteConfig.name,
+        template: `%s | ${siteConfig.name}`,
+    },
+    description: siteConfig.description,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    openGraph: {
+        type: "website",
+        url: siteConfig.url,
+        siteName: siteConfig.name,
+        title: siteConfig.name,
+        description: siteConfig.description,
+    },
+    twitter: { card: "summary_large_image" },
+};
+
+export const viewport: Viewport = {
+    viewportFit: 'cover',
+    themeColor: '#f5f5f5',
 };
 
 export default function RootLayout({
@@ -26,17 +45,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-		<html lang="en" className="">
-            <body className={`${saans.className} antialiased h-full w-full overflow-x-hidden bg-neutral-100 selection:bg-green-400/40 selection:text-gray-900 dark:bg-gray-950`} >
-
-                <main className=""> 
-                    <Navbar />
-					{children} 
-				</main>
-                
-                {/* <CTA /> */}
-                <Footer />  
-
+        <html lang="en">
+            <body className={`${saans.className} antialiased h-full w-full overflow-x-hidden`}>
+                <Navbar />
+                <main id="main">
+                    {children}
+                </main>
+                <Footer />
             </body>
         </html>
     );

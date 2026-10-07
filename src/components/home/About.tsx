@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
-import { Marquee } from '../magicui/marquee'
+import { Marquee } from '@/components/ui/Marquee'
 import { Python, React as ReactIcon, Java, Docker, AWS, Go, Terraform, TypeScript } from "developer-icons";
 
-const Myself = () => {
+const About = () => {
 
     // const blurb = "AWS-certified Software Engineer with experience in full-stack development, cloud infrastructure, and DevOps. Skilled in web technologies and cloud services including Python, React, Java, Docker, and AWS"
 
@@ -28,7 +28,7 @@ const Myself = () => {
                 </p>
             </div>
 
-            <div className="hidden flex-col items-center justify-around lg:flex h-full col-span-6 mx-25">
+            <div className="hidden flex-col items-center justify-around lg:flex h-full col-span-6 mx-24">
                 <div className="relative group">
                     <Image
                         className="mx-auto aspect-[3/4] w-[90%] mt-6 max-w-sm rounded-lg object-cover shadow-lg absolute -rotate-6 -left-1/5 group-hover:-left-1/2 group-hover:-rotate-10 transition-all ease-in-out duration-400"
@@ -48,7 +48,7 @@ const Myself = () => {
                         width={500} height={500} 
                         className="relative mx-auto aspect-[3/4] w-full max-w-sm rounded-lg object-cover z-10 shadow-lg" 
                     />
-                    <p className="text-sm text-center text-gray-500 mt-2">
+                    <p className="text-sm text-center text-fg-muted mt-2">
                         11th of December 2024, Graduation Day <br />
                     <a className="ml-1 underline" href="https://maps.app.goo.gl/133QEkXZ1cyvkYqv6">University of Otago Clock Tower</a>
                     </p>
@@ -97,4 +97,4 @@ const Myself = () => {
     )
 }
 
-export default Myself
+export default About

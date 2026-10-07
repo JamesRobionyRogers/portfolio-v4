@@ -1,10 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 
-import { BentoGrid } from '../ui/ProjectBentoGrid'
+import { BentoGrid } from '@/components/projects/ProjectBentoGrid'
 import { projects } from '@/lib/projects'
 
-const Header = () => {
+const Hero = () => {
     return (
         <section className="relative min-h-[90vh] flex flex-col justify-between px-4 lg:px-8 pt-10 sm:py-0">
             <div className="flex flex-col gap-10 sm:gap-0">
@@ -20,7 +20,7 @@ const Header = () => {
             </div>
 
             <div className="flex flex-col flex-1 gap-4 sm:mb-10">
-                <div className="relative my-auto bg-black rounded-xl flex-grow sm:aspect-video overflow-hidden shadow-2xl">
+                <div className="relative my-auto bg-ink rounded-xl flex-grow sm:aspect-video overflow-hidden shadow-2xl">
                     <BentoGrid projects={projects} />
                 </div>
                 <div className="flex justify-between">
@@ -68,4 +68,4 @@ const FullName = () => {
     )
 }
 
-export default Header
+export default Hero
