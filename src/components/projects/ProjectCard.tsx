@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Project } from '@/types/project'
 import { projectHref } from '@/lib/projects'
 import { TagList } from '@/components/ui/Tag'
+import ProjectCardVideo from '@/components/projects/ProjectCardVideo'
 
 interface ProjectCardProps {
   project: Project
@@ -99,6 +100,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
           className="object-cover transition-[transform,filter] duration-800 group-hover:scale-110 group-hover:blur-[5px]"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+        {project.video && <ProjectCardVideo src={project.video} poster={project.poster} />}
       </div>
 
       <div className="p-4 lg:p-6">

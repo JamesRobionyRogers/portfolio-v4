@@ -118,7 +118,7 @@ Rules:
 
 Rules:
 
-- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the planned video reveal (see the backlog). Other card variants use `group-hover:scale-105`.
+- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the video reveal, which fades in at the `slow` timing. Other card variants use `group-hover:scale-105`.
 - Transition only the properties you animate (`transition-colors`, `transition-transform`), not `transition-all`.
 - **Reduced motion is required.** The marquees use `motion-safe:animate-marquee`, and there is a global fallback:
 
@@ -199,7 +199,7 @@ A single component with variants `default`, `compact` and `featured`.
 - The meta line always reads `{type} · {year}`, using the `meta` role in `ink-subtle`.
 - The title row is `flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1`, with `shrink-0` on the meta.
 - Description: the `body` role in `ink-muted`, clamped with `line-clamp-3`.
-- Media is `aspect-4/3` with the media radius. On the `default` variant, hover blurs and zooms the image and (once built) fades in the project's `video` over it; touch and reduced-motion users keep the static image.
+- Media is `aspect-4/3` with the media radius. On the `default` variant, hover (or keyboard focus) blurs and zooms the image and fades in the project's `video` over it (`projects/ProjectCardVideo.tsx`). The video is decorative (`aria-hidden`, not focusable) and loads nothing until the first reveal; touch and reduced-motion users keep the static image.
 - **Featured on mobile:** below `sm` the text stacks under the image (`relative sm:absolute`) so it is never clipped. The overlay layout and scrim apply from `sm` up.
 - The `sizes` values must match the rendered width (e.g. `sizes="24px"` for icons).
 
@@ -310,4 +310,4 @@ These are ordered by how much each item affects mobile users. File references ar
 
 **Features to build**
 
-14. Default `ProjectCard` video reveal: on hover, over the blurred image, fade in the project's `video` (muted, looping, `poster` set) and play it; pause and fade out on leave. Cards without a `video` keep the blur only. Touch devices and reduced motion show the static image (`projects/ProjectCard.tsx`).
+14. ~~Default `ProjectCard` video reveal: on hover, over the blurred image, fade in the project's `video` (muted, looping, `poster` set) and play it; pause and fade out on leave. Cards without a `video` keep the blur only. Touch devices and reduced motion show the static image (`projects/ProjectCard.tsx`).~~ Done.

@@ -1,0 +1,64 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+
+const CAN_REVEAL = '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+
+// Fades a decorative video over the card image while its parent link is hovered or focused.
+// Nothing loads until the first reveal, and touch or reduced-motion users never trigger one.
+const ProjectCardVideo = ({ src, poster }: { src: string; poster?: string }) => {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [loaded, setLoaded] = useState(false)
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    const card = ref.current?.closest('a')
+    if (!card) return
+
+    const show = () => {
+      if (!window.matchMedia(CAN_REVEAL).matches) return
+      setLoaded(true)
+      setActive(true)
+    }
+    const onPointerEnter = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') show()
+    }
+    const hide = () => setActive(false)
+
+    card.addEventListener('pointerenter', onPointerEnter)
+    card.addEventListener('pointerleave', hide)
+    card.addEventListener('focus', show)
+    card.addEventListener('blur', hide)
+    return () => {
+      card.removeEventListener('pointerenter', onPointerEnter)
+      card.removeEventListener('pointerleave', hide)
+      card.removeEventListener('focus', show)
+      card.removeEventListener('blur', hide)
+    }
+  }, [])
+
+  useEffect(() => {
+    const video = ref.current
+    if (!video || !loaded) return
+    if (active) video.play().catch(() => {})
+    else video.pause()
+  }, [active, loaded])
+
+  return (
+    <video
+      ref={ref}
+      src={loaded ? src : undefined}
+      poster={loaded ? poster : undefined}
+      muted
+      loop
+      playsInline
+      preload="none"
+      disablePictureInPicture
+      aria-hidden
+      tabIndex={-1}
+      className={`pointer-events-none absolute inset-0 size-full object-cover transition-opacity duration-500 ease-in-out ${active ? 'opacity-100' : 'opacity-0'}`}
+    />
+  )
+}
+
+export default ProjectCardVideo
