@@ -49,7 +49,7 @@ export const projects: Project[] = [
     featuredImage: "/images/projects/exiftoolgui/projectscreenshot.webp",
     images: ["/images/projects/exiftoolgui/projectscreenshot.webp"],
     icon: "/images/projects/exiftoolgui/app-icon.webp",
-    description: "User-friendly graphical interface for ExifTool, making metadata management accessible to photographers.",
+    description: "User-friendly graphical interface for ExifTool, making metadata management accessible to media enthusiasts and photographers.",
     summary: "A MacOS application that provides an intuitive interface for managing file metadata using the powerful ExifTool library.",
     technologies: ["Swift", "SwiftUI", "Exiftool", "MacOS", "XCode"],
     type: "MacOS App",
