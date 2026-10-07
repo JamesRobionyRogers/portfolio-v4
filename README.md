@@ -30,10 +30,12 @@ src/
   app/                  routes (home, projects, blog, cv, services), sitemap.ts, robots.ts
     fonts/              Saans woff2 files
   components/
-    sections/           home page sections and the footer
-    ui/                 navbar, project cards, bento grid, table of contents
-    magicui/            marquee
-  config/site.ts        site URL and social links
+    layout/             Navbar, Footer
+    home/               Hero, About, Work (home page sections)
+    projects/           ProjectCard, ProjectBentoGrid, ProjectLinks
+    blog/               TableOfContents
+    ui/                 shared primitives: Tag, Marquee
+  config/site.ts        site name, URL, description, nav and social links
   content/blog/         blog posts (.mdx)
   lib/
     projects.ts         all project data and helpers
@@ -152,7 +154,7 @@ The blog system uses **MDX (Markdown + JSX)** with frontmatter for metadata. Blo
 - **Blog listing page**: `src/app/blog/page.tsx`
 - **Blog post detail page**: `src/app/blog/[slug]/page.tsx`
 - **MDX utilities**: `src/lib/mdx.ts`
-- **Table of Contents**: `src/components/ui/TableOfContents.tsx`
+- **Table of Contents**: `src/components/blog/TableOfContents.tsx`
 - **Blog images**: `public/images/blog/`
 
 ### Example Blog Post Structure
