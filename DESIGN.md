@@ -265,6 +265,7 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 
 - The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-fg` body, headings, links and bold, and `ink-raised` rules and code-block backgrounds.
 - Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent-on-ink` on hover and get the focus ring.
+- Code fences are highlighted at build time by `rehype-pretty-code` (Shiki) with the bundled `one-dark-pro` theme, set in `src/app/blog/[slug]/page.tsx`. `keepBackground: false` keeps the `ink-raised` block background, so only the token colours come from the theme. Tag every fence with its language (` ```tsx `); untagged fences render as plain `ink-muted` text. Long lines scroll inside the `<pre>`.
 - Images get the media radius. Inline code is a chip, `bg-ink-chip rounded-md px-1.5 py-0.5`, with no backticks. `ink-raised` is too close to `ink` to read.
 - The body drops `prose`'s `65ch` measure (`max-w-none`) to fill its 8 columns, and keeps `break-words` so long URLs and inline code never overflow at 320px.
 - Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
