@@ -273,7 +273,7 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 - Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8 lg:px-12`, with the body at `lg:col-span-8` and the TOC pinned right at `lg:col-span-2 lg:col-start-11`.
 - `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `ink-subtle`, `sticky top-28`.
 - It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `ink-subtle` and `hover:text-ink-fg`.
-- The heading in view gets `aria-current="location"`, `text-ink-fg` and `underline underline-offset-4 decoration-2`.
+- The heading in view gets `aria-current="location"`, `text-accent-on-ink` and `underline underline-offset-4 decoration-2`.
 - Clicking scrolls smoothly, or instantly under `prefers-reduced-motion`, and updates the URL hash.
 
 ### BentoGrid (hero showcase)
