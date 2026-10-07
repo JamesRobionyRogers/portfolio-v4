@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     });
 
     return (
-        <BlogShell as="article" className="gap-8 lg:gap-12 px-4 sm:px-6 pt-16 pb-8 lg:p-16">
+        <BlogShell as="article">
             <PostHeader post={post} />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

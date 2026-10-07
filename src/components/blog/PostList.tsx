@@ -3,18 +3,18 @@ import { TagList } from '@/components/ui/Tag'
 import { PostDate } from '@/components/blog/PostDate'
 import type { BlogPost } from '@/lib/mdx'
 
-// Divided rows on ink: date on the left from `sm` up, title, description and tags on the right
+// Divided rows on ink: a narrow date column from `sm` up, then title, description and tags
 const PostList = ({ posts }: { posts: BlogPost[] }) => (
     <ul className="flex flex-col border-t border-ink-raised">
         {posts.map((post) => (
             <li key={post.slug} className="border-b border-ink-raised">
                 <Link
                     href={`/blog/${post.slug}`}
-                    className="group grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 py-6 lg:py-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                    className="group flex flex-col sm:flex-row gap-2 sm:gap-6 py-6 lg:py-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
                 >
-                    <PostDate date={post.date} className="text-ink-subtle sm:col-span-3 sm:pt-1" />
-                    <div className="flex flex-col gap-3 sm:col-span-9">
-                        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold leading-tight text-ink-fg group-hover:text-accent-on-ink transition-colors duration-200">
+                    <PostDate date={post.date} className="shrink-0 text-ink-subtle sm:w-40 sm:pt-1" />
+                    <div className="flex min-w-0 flex-col gap-3">
+                        <h2 className="text-xl lg:text-2xl font-semibold leading-tight text-ink-fg group-hover:text-accent-on-ink transition-colors duration-200">
                             {post.title}
                         </h2>
                         {post.description && (

@@ -239,22 +239,23 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 
 **Shell (`BlogShell`)**
 
-- `bg-ink` with the panel radius, `mx-4 sm:mx-6 lg:mx-8 mt-4 lg:mt-8 mb-4 lg:mb-8`, inner gutter `px-4 sm:px-6 lg:px-8`, then `pt-24 lg:pt-28 pb-12 lg:pb-16` and `flex flex-col gap-10 lg:gap-16`.
-- It renders a `<div>` by default and an `<article>` on post pages (`as="article"`).
+- `bg-ink` with the panel radius, `mx-4 sm:mx-6 lg:mx-8 mt-4 lg:mt-8 mb-4 lg:mb-8`, padding `px-4 sm:px-6 pt-16 pb-8 lg:p-16` (equal on all sides from `lg` up), and `flex flex-col gap-8 lg:gap-12`.
+- It is at least one screen tall: its bottom margin meets the viewport's bottom edge and the footer sits just below the fold.
+- That height comes from the `body:has(.blog-shell)` rule in `globals.css`, which works without hard-coding the nav height. It makes the body a grid, stretches the nav and main rows to `100svh` with a spanning `::before`, and `grow`s the shell inside a flex `main`.
+- It renders a `<div>` by default and an `<article>` on post pages (`as="article"`). Project detail keeps its own shell.
 - All text inside uses the `ink-*` colours.
 
 **Listing (`/blog`)**
 
 - The title "Blog" uses the `h1` role in `ink-fg`.
 - `PostList` is a `<ul>` of divided rows, `border-t` plus a `border-b` per row in `ink-raised`, newest first.
-- Each row is one `Link` with the focus ring: `grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 py-6 lg:py-8`.
-- The date (`PostDate`, the `meta` role in `ink-subtle`) spans 3 columns from `sm` up. The other 9 hold the title, description and tags.
-- The title is an `<h2>` in the `lead` role, `text-ink-fg group-hover:text-accent-on-ink`. The description uses the `body` role in `ink-muted` at `max-w-prose`, followed by a `TagList` with `max={4}`.
+- Each row is one `Link` with the focus ring: `flex flex-col sm:flex-row gap-2 sm:gap-6 py-6 lg:py-8`.
+- The date (`PostDate`, the `meta` role in `ink-subtle`) is a fixed `sm:w-40` column, so the title starts close beside it.
+- The title is an `<h2>`, `text-xl lg:text-2xl font-semibold leading-tight text-ink-fg group-hover:text-accent-on-ink`. The description uses the `body` role in `ink-muted` at `max-w-prose`, followed by a `TagList` with `max={4}`.
 - Dates render as `<time dateTime>` in `en-NZ` long form ("23 March 2023").
 
 **Post header (`PostHeader`)**
 
-- The post page swaps the shell padding for `px-4 sm:px-6 pt-16 pb-8 lg:p-16` and `gap-8 lg:gap-12`. From `lg` up the inset is equal on all four sides, and the header and body share one left edge. Project detail keeps the default shell.
 - It opens with a breadcrumb: a `<nav aria-label="Breadcrumb">` holding a `Link` to `/blog`, then `/`, then the post title (`aria-current="page"`, `truncate`). The breadcrumb text is `text-sm font-medium text-ink-subtle`, and the link has `min-h-11` and the focus ring.
 - Next comes the post `<h1>`, sentence case: `text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight break-words text-ink-fg`. Post titles are full sentences, so they skip the uppercase `h1` role.
 - Below the title, a row holds the date (`PostDate` in `ink-subtle`) and the full `TagList`: `flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6`.
