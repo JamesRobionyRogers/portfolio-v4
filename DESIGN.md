@@ -254,7 +254,7 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 
 **Post header (`PostHeader`)**
 
-- The post page tightens the shell to `px-4 lg:px-6 pt-16 lg:pt-20 pb-8 lg:pb-12` and `gap-8 lg:gap-12`, because long-form text needs the width more than the frame does. Project detail keeps the default shell.
+- The post page swaps the shell padding for `px-4 sm:px-6 pt-16 pb-8 lg:p-16` and `gap-8 lg:gap-12`. From `lg` up the inset is equal on all four sides, and the header and body share one left edge. Project detail keeps the default shell.
 - It opens with a breadcrumb: a `<nav aria-label="Breadcrumb">` holding a `Link` to `/blog`, then `/`, then the post title (`aria-current="page"`, `truncate`). The breadcrumb text is `text-sm font-medium text-ink-subtle`, and the link has `min-h-11` and the focus ring.
 - Next comes the post `<h1>`, sentence case: `text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight break-words text-ink-fg`. Post titles are full sentences, so they skip the uppercase `h1` role.
 - Below the title, a row holds the date (`PostDate` in `ink-subtle`) and the full `TagList`: `flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6`.
@@ -270,7 +270,7 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 
 **Layout and table of contents**
 
-- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8 lg:px-12`, with the body at `lg:col-span-8` and the TOC pinned right at `lg:col-span-2 lg:col-start-11`.
+- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8`, with the body at `lg:col-span-8` and the TOC pinned right at `lg:col-span-2 lg:col-start-11`.
 - `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `ink-subtle`, `sticky top-28`.
 - It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `ink-subtle` and `hover:text-ink-fg`.
 - The heading in view gets `aria-current="location"`, `text-accent-on-ink` and `underline underline-offset-4 decoration-2`.
