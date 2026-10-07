@@ -235,38 +235,45 @@ A single component with variants `default`, `compact` and `featured`.
 
 ### Blog
 
-The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX in `src/content/blog/`. Its wrappers use the container, gutter and top offset directly; swap them for `Container` and `Section` once those exist.
+The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX in `src/content/blog/`. Both pages sit inside the same full-page ink shell as project detail. There are no cards.
+
+**Shell (`BlogShell`)**
+
+- `bg-ink` with the panel radius, `mx-4 sm:mx-6 lg:mx-8 mt-4 lg:mt-8 mb-4 lg:mb-8`, inner gutter `px-4 sm:px-6 lg:px-8`, then `pt-24 lg:pt-28 pb-12 lg:pb-16` and `flex flex-col gap-10 lg:gap-16`.
+- It renders a `<div>` by default and an `<article>` on post pages (`as="article"`).
+- All text inside uses the `ink-*` colours.
 
 **Listing (`/blog`)**
 
-- The page title "Blog" uses the `h1` role in `fg`.
-- Posts are `PostCard`s in `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` with the card-list gap, newest first.
-- `PostCard` follows `ProjectCard`: the whole card is a `Link` with the focus ring, `bg-ink`, the card radius and card padding.
-- Inside the card: the date (`PostDate`, the `meta` role in `ink-subtle`), the title as an `<h2>` in the `h3` role (`text-ink-fg group-hover:text-accent-on-ink`), the description in the `body` role in `ink-muted` with `line-clamp-3`, then a `TagList` with `max={3}`.
+- The title "Blog" uses the `h1` role in `ink-fg`.
+- `PostList` is a `<ul>` of divided rows, `border-t` plus a `border-b` per row in `ink-raised`, newest first.
+- Each row is one `Link` with the focus ring: `grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-6 py-6 lg:py-8`.
+- The date (`PostDate`, the `meta` role in `ink-subtle`) spans 3 columns from `sm` up. The other 9 hold the title, description and tags.
+- The title is an `<h2>` in the `lead` role, `text-ink-fg group-hover:text-accent-on-ink`. The description uses the `body` role in `ink-muted` at `max-w-prose`, followed by a `TagList` with `max={4}`.
 - Dates render as `<time dateTime>` in `en-NZ` long form ("23 March 2023").
 
 **Post header (`PostHeader`)**
 
-- An ink panel: `bg-ink` with the panel radius, `px-4 py-6 sm:p-8 lg:p-12`, `flex flex-col gap-6 lg:gap-8`.
 - It opens with a back link, a `Link` to `/blog` reading "← Blog" (arrow in `aria-hidden`), styled as `TextLink` with the `on-ink` tone.
-- Then the date, the post `<h1>`, the description (`text-base sm:text-lg leading-relaxed text-ink-muted max-w-prose`) and the full `TagList`.
-- Post titles are long sentences, so the `<h1>` uses the `h2` role with `break-words` rather than the `h1` role.
-- The cover image sits last, `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
+- Next comes the post `<h1>` in `ink-fg`. Post titles are long sentences, so it uses the `h2` role with `break-words` rather than the `h1` role.
+- Then a raised meta panel (`bg-ink-raised`, panel radius, `p-4 lg:p-6`), laid out like project detail's MetaList: a `<dl>` in `grid grid-cols-1 sm:grid-cols-12 gap-6`.
+- The panel's entries are Published (span 3), Tags (span 4, `TagList variant="on-raised"`) and Summary (span 5). Each `<dt>` uses the `eyebrow` role in `ink-subtle`.
+- The cover image closes the panel: `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
 
 **Prose**
 
-- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the tokens: `fg` for text and headings, `canvas-sunken` for rules and borders, `ink` behind code blocks.
-- Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent` on hover and get the focus ring.
-- Images get the media radius. Inline code sits on `canvas-sunken` with no backticks.
+- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-muted` body, `ink-fg` headings, links and bold, `ink-raised` rules and code backgrounds.
+- Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent-on-ink` on hover and get the focus ring.
+- Images get the media radius. Inline code sits on `ink-raised` with no backticks.
 - The body keeps `prose`'s `65ch` measure and `break-words` so long URLs and inline code never overflow at 320px.
 - Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
 
 **Layout and table of contents**
 
-- The page is an `<article>`: the header, then `grid grid-cols-1 lg:grid-cols-12 gap-8` with the body at `lg:col-span-8` and the TOC at `lg:col-span-3 lg:col-start-10`.
-- `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `fg-muted`, `sticky top-28`.
-- It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `fg/70` and `hover:text-fg`.
-- The heading in view gets `aria-current="location"`, `text-fg` and `underline underline-offset-4 decoration-2`.
+- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8`, with the body at `lg:col-span-8` and the TOC at `lg:col-span-3 lg:col-start-10`.
+- `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `ink-subtle`, `sticky top-28`.
+- It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `ink-subtle` and `hover:text-ink-fg`.
+- The heading in view gets `aria-current="location"`, `text-ink-fg` and `underline underline-offset-4 decoration-2`.
 - Clicking scrolls smoothly, or instantly under `prefers-reduced-motion`, and updates the URL hash.
 
 ### BentoGrid (hero showcase)

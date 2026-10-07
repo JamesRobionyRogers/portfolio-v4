@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/mdx';
 import { compileMDX } from 'next-mdx-remote/rsc';
+import BlogShell from '@/components/blog/BlogShell';
 import PostHeader from '@/components/blog/PostHeader';
 import TableOfContents from '@/components/blog/TableOfContents';
 
@@ -44,7 +45,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     });
 
     return (
-        <article className="mx-auto w-full max-w-[90rem] px-4 sm:px-6 lg:px-8 pt-24 lg:pt-28 pb-16 sm:pb-20 lg:pb-28 flex flex-col gap-10 lg:gap-16">
+        <BlogShell as="article">
             <PostHeader post={post} />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -56,6 +57,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <TableOfContents containerId={POST_BODY_ID} />
                 </aside>
             </div>
-        </article>
+        </BlogShell>
     );
 }

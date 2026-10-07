@@ -67,32 +67,32 @@
   }
 }
 
-/* Blog post body: maps the typography plugin's colours onto the tokens. Pair with `prose` */
+/* Blog post body on the ink shell: maps the typography plugin's colours onto the tokens. Pair with `prose` */
 .prose.blog-prose {
-  --tw-prose-body: var(--color-fg);
-  --tw-prose-headings: var(--color-fg);
-  --tw-prose-lead: var(--color-fg);
-  --tw-prose-links: var(--color-fg);
-  --tw-prose-bold: var(--color-fg);
-  --tw-prose-counters: var(--color-fg);
-  --tw-prose-bullets: var(--color-fg-muted);
-  --tw-prose-hr: var(--color-canvas-sunken);
-  --tw-prose-quotes: var(--color-fg);
-  --tw-prose-quote-borders: var(--color-canvas-sunken);
-  --tw-prose-captions: var(--color-fg);
-  --tw-prose-kbd: var(--color-fg);
-  --tw-prose-code: var(--color-fg);
+  --tw-prose-body: var(--color-ink-muted);
+  --tw-prose-headings: var(--color-ink-fg);
+  --tw-prose-lead: var(--color-ink-muted);
+  --tw-prose-links: var(--color-ink-fg);
+  --tw-prose-bold: var(--color-ink-fg);
+  --tw-prose-counters: var(--color-ink-subtle);
+  --tw-prose-bullets: var(--color-ink-subtle);
+  --tw-prose-hr: var(--color-ink-raised);
+  --tw-prose-quotes: var(--color-ink-fg);
+  --tw-prose-quote-borders: var(--color-ink-chip);
+  --tw-prose-captions: var(--color-ink-subtle);
+  --tw-prose-kbd: var(--color-ink-fg);
+  --tw-prose-code: var(--color-ink-fg);
   --tw-prose-pre-code: var(--color-ink-muted);
-  --tw-prose-pre-bg: var(--color-ink);
-  --tw-prose-th-borders: var(--color-canvas-sunken);
-  --tw-prose-td-borders: var(--color-canvas-sunken);
+  --tw-prose-pre-bg: var(--color-ink-raised);
+  --tw-prose-th-borders: var(--color-ink-chip);
+  --tw-prose-td-borders: var(--color-ink-raised);
 
   :where(h2, h3, h4) {
     @apply font-semibold scroll-mt-28;
   }
 
   :where(a) {
-    @apply font-semibold underline-offset-4 transition-colors duration-200 hover:text-accent;
+    @apply font-semibold underline-offset-4 transition-colors duration-200 hover:text-accent-on-ink;
   }
 
   :where(a):focus-visible {
@@ -104,6 +104,6 @@
   }
 
   :where(:not(pre) > code) {
-    @apply rounded-md bg-canvas-sunken px-1.5 py-0.5 font-medium before:content-none after:content-none;
+    @apply rounded-md bg-ink-raised px-1.5 py-0.5 font-medium before:content-none after:content-none;
   }
 }

@@ -61,7 +61,7 @@ export default function TableOfContents({ containerId }: { containerId: string }
 
   return (
     <nav aria-labelledby="toc-heading" className="sticky top-28 flex flex-col gap-2">
-      <h2 id="toc-heading" className="text-sm sm:text-base font-semibold uppercase tracking-wide text-fg-muted">
+      <h2 id="toc-heading" className="text-sm sm:text-base font-semibold uppercase tracking-wide text-ink-subtle">
         On this page
       </h2>
       <ul>
@@ -72,8 +72,8 @@ export default function TableOfContents({ containerId }: { containerId: string }
               onClick={(e) => handleClick(e, heading.id)}
               aria-current={activeId === heading.id ? 'location' : undefined}
               className={cn(
-                'flex items-center min-h-11 py-1 text-base transition-colors duration-200 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus',
-                activeId === heading.id ? 'text-fg underline underline-offset-4 decoration-2' : 'text-fg/70'
+                'flex items-center min-h-11 py-1 text-base transition-colors duration-200 hover:text-ink-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus',
+                activeId === heading.id ? 'text-ink-fg underline underline-offset-4 decoration-2' : 'text-ink-subtle'
               )}
             >
               {heading.text}
