@@ -13,6 +13,7 @@ export type Project = {
     github?: string;
     testimonial?: { name: string, company?: string, comment: string };
     video?: string; // shown instead of featuredImage in the home bento grid
+    poster?: string; // first frame shown while the video loads
     featured?: number; // rank on home and /projects; 1 is the bento hero
     current?: boolean; // shown as "Working on" in the navbar
 };

@@ -42,7 +42,7 @@ const FullName = () => {
             <div className="overflow-hidden sm:mr-[4vw]">
                 <Image
                     className="h-auto w-full sm:h-[10vw] sm:w-auto object-contain pointer-events-none"
-                    src="/JAMES.png"
+                    src="/JAMES.webp"
                     alt="James"
                     width={0} height={0}
                     style={{ color: 'transparent' }}
@@ -55,7 +55,7 @@ const FullName = () => {
             <div className="overflow-hidden">
                 <Image
                     className="h-[10vw] w-auto object-contain pointer-events-none"
-                    src="/ROBIONY-ROGERS.png"
+                    src="/ROBIONY-ROGERS.webp"
                     alt="James"
                     width={0} height={0}
                     style={{ color: 'transparent' }}

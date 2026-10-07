@@ -32,18 +32,18 @@ const Myself = () => {
                 <div className="relative group">
                     <Image
                         className="mx-auto aspect-[3/4] w-[90%] mt-6 max-w-sm rounded-lg object-cover shadow-lg absolute -rotate-6 -left-1/5 group-hover:-left-1/2 group-hover:-rotate-10 transition-all ease-in-out duration-400"
-                        src="/images/assets/left-selfportrate.jpg"
+                        src="/images/assets/left-selfportrate.webp"
                         alt="Picture of James"
                         width={500} height={500}
                     />
                     <Image
                         className="mx-auto aspect-[3/4] w-[90%] mt-6 max-w-sm rounded-lg object-cover shadow-lg absolute rotate-6 -right-1/5 group-hover:-right-1/2 group-hover:rotate-10 transition-all ease-in-out duration-400"
-                        src="/images/assets/right-selfportrate.JPG"
+                        src="/images/assets/right-selfportrate.webp"
                         alt="Picture of James"
                         width={500} height={500}
                     />
                     <Image 
-                        src="/images/SelfPortrait.JPG" 
+                        src="/images/SelfPortrait.webp" 
                         alt="Picture of James" 
                         width={500} height={500} 
                         className="relative mx-auto aspect-[3/4] w-full max-w-sm rounded-lg object-cover z-10 shadow-lg" 
