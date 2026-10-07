@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
- 
+import { getCurrentProject, projectHref } from '@/lib/projects'
 
 const Navbar = () => {
 
@@ -9,11 +9,7 @@ const Navbar = () => {
         "Working in Wellington"
     ]
 
-    const currentProject = [
-        "Working on",
-        "Exiftool GUI for Mac"
-    ]
-    const currentProjectLink = "/projects/exiftool-gui"
+    const currentProject = getCurrentProject()
 
     return (
         <nav className="sticky top-0 px-6 pt-2 lg:px-10 lg:pt-4 z-100">
@@ -23,10 +19,12 @@ const Navbar = () => {
                         <p className="text-lg font-semibold text-neutral-900">{location[0]}</p>
                         <p className="text-lg text-neutral-400">{location[1]}</p>
                     </div>
-                    <div className="hidden lg:flex flex-col">
-                        <p className="text-lg font-semibold text-neutral-900">{currentProject[0]}</p>
-                        <a className="text-lg text-neutral-400" href={currentProjectLink}>{currentProject[1]}</a>
-                    </div>
+                    {currentProject && (
+                        <div className="hidden lg:flex flex-col">
+                            <p className="text-lg font-semibold text-neutral-900">Working on</p>
+                            <Link className="text-lg text-neutral-400" href={projectHref(currentProject)}>{currentProject.title}</Link>
+                        </div>
+                    )}
                 </li>
 
                 <li className="flex justify-between items-center gap-16">

@@ -2,24 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 import { BentoGrid } from '../ui/ProjectBentoGrid'
-import { /* getAllProjects, */ getProjectsFromTitles } from '@/lib/projects'
-
-function getProjectsForBentoGrid() {
-    return getProjectsFromTitles([
-        "TailorWrite",
-        "ExifTool GUI",
-        "Birds of Aotearoa",
-        "Run It Twice",
-        "FHCL",
-        "FHCL",
-        "Run It Twice",
-        "ExifTool GUI",
-        "Birds of Aotearoa",
-        "Birds of Aotearoa",
-        "ExifTool GUI",
-        "Run It Twice",
-    ]);
-}
+import { projects } from '@/lib/projects'
 
 const Header = () => {
     return (
@@ -37,33 +20,8 @@ const Header = () => {
             </div>
 
             <div className="flex flex-col flex-1 gap-4 sm:mb-10">
-                {/* <div className="relative my-auto bg-black rounded-xl flex-grow sm:aspect-video overflow-hidden shadow-2xl">
-                    <MarqueeDemoVertical />
-                </div> */}
-                
                 <div className="relative my-auto bg-black rounded-xl flex-grow sm:aspect-video overflow-hidden shadow-2xl">
-                    {/* <MarqueeDemoVertical /> */}
-                    <BentoGrid
-                      projects={getProjectsForBentoGrid()}
-                      mediaConfig={[
-                        {
-                            projectTitle: "TailorWrite",
-                            media: "/images/projects/tailorwrite/tailorwrite.mp4",
-                        },
-                        {
-                            projectTitle: "Birds of Aotearoa",
-                            media: "/images/projects/birdsofaotearoa/birds-of-aotearoa.mp4",
-                        },
-                        {
-                            projectTitle: "Run It Twice",
-                            media: "/images/projects/runittwice/runittwice.mp4",
-                        },
-                        {
-                            projectTitle: "FHCL",
-                            media: "/images/projects/fhcl/fhcl.mp4",
-                        },
-                      ]}
-                    />
+                    <BentoGrid projects={projects} />
                 </div>
                 <div className="flex justify-between">
                     <p className="text-lg font-medium leading-[1] text-center md:text-left">↓ Check out </p>

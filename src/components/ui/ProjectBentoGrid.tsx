@@ -5,17 +5,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { projectHref } from "@/lib/projects";
 import type { Project } from "@/types/project";
 
 // ------------------ TYPES ------------------
-
-// NEW: Allows explicit media selection per tile
-export type BentoMediaConfig = {
-  projectTitle: string;
-  media: string; // exact image/video you want
-};
 
 type BentoItem = {
   project: Project;
@@ -28,28 +22,17 @@ type BentoItem = {
 const isVideo = (src: string) => /\.(mp4|webm|mov)$/i.test(src);
 
 const getFeatured = (projects: Project[]) => {
-  return projects.find((p) => p.featured) || projects[0];
+  return projects.find((p) => p.featured === 1) || projects[0];
 };
 
-// Layout mapping with explicit media override
-const mapProjectsToLayout = (
-  projects: Project[],
-  mediaConfig?: BentoMediaConfig[]
-): BentoItem[] => {
+// The featured project takes the large tile; the rest cycle through the remaining slots
+const mapProjectsToLayout = (projects: Project[]): BentoItem[] => {
   const items: BentoItem[] = [];
 
   const featured = getFeatured(projects);
   const rest = projects.filter((p) => p !== featured);
 
-  const getMedia = (project: Project) => {
-    const override = mediaConfig?.find(
-      (m) => m.projectTitle === project.title
-    );
-
-    if (override) return override.media;
-
-    return project.video || project.featuredImage;
-  };
+  const getMedia = (project: Project) => project.video || project.featuredImage;
 
   if (featured) {
     const media = getMedia(featured);
@@ -79,8 +62,10 @@ const mapProjectsToLayout = (
     { col: "9 / span 5", row: "7 / span 2" },
   ];
 
-  rest.forEach((project, i) => {
-    const slot = slots[i % slots.length];
+  if (rest.length === 0) return items;
+
+  slots.forEach((slot, i) => {
+    const project = rest[i % rest.length];
     const media = getMedia(project);
 
     items.push({
@@ -154,15 +139,14 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
   const { project, media, isVideo, style } = item;
 
   return (
-        <motion.div
-            whileHover={{ scale: 1.01 }}
-            className={`relative overflow-hidden rounded-lg lg:rounded-2xl bg-neutral-900 text-white cursor-pointer ${
+        <div
+            className={`relative overflow-hidden rounded-lg lg:rounded-2xl bg-neutral-900 text-white cursor-pointer transition-transform duration-200 motion-safe:hover:scale-[1.01] ${
                 mobile ? "aspect-[16/9]" : ""
             }`}
             style={!mobile ? style : undefined}
         >
-            <Link href={project.route}>
-                <Media src={media} isVideo={isVideo} priority={project.featured} />
+            <Link href={projectHref(project)}>
+                <Media src={media} isVideo={isVideo} priority={project.featured === 1} />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
@@ -173,7 +157,7 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
                     </p>
                 </div>
             </Link>
-        </motion.div>
+        </div>
   );
 };
 
@@ -181,12 +165,10 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
 
 export function BentoGrid({
   projects,
-  mediaConfig,
 }: {
   projects: Project[];
-  mediaConfig?: BentoMediaConfig[];
 }) {
-  const items = mapProjectsToLayout(projects, mediaConfig);
+  const items = mapProjectsToLayout(projects);
 
   return (
     <>
@@ -216,20 +198,3 @@ export function BentoGrid({
     </>
   );
 }
-
-// ------------------ USAGE ------------------
-// const projects = await getAllProjects();
-//
-// <BentoGrid
-//   projects={projects}
-//   mediaConfig={[
-//     {
-//       projectTitle: "TailorWrite",
-//       media: "/videos/tailorwrite-demo.mp4",
-//     },
-//     {
-//       projectTitle: "FHCL",
-//       media: "/images/projects/fhcl/overview.png",
-//     },
-//   ]}
-// />

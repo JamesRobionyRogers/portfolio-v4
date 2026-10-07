@@ -1,6 +1,7 @@
 export type Project = {
     title: string;
-    featuredImage: string; 
+    slug: string; // URL segment: /projects/<slug>
+    featuredImage: string;
     images: (string | string[])[];
     icon: string;
     description: string;
@@ -8,11 +9,10 @@ export type Project = {
     technologies: string[];
     type: string;
     year: number;
-    route: string;
-    // Optional fields can be added here
-    link?: string;  
+    link?: string; // must include https://
     github?: string;
-    testimonial? : {name: string, company?: string, comment: string}
-    video?: string; // NEW: primary video source
-    featured?: boolean; // NEW: explicit featured control
+    testimonial?: { name: string, company?: string, comment: string };
+    video?: string; // shown instead of featuredImage in the home bento grid
+    featured?: number; // rank on home and /projects; 1 is the bento hero
+    current?: boolean; // shown as "Working on" in the navbar
 };

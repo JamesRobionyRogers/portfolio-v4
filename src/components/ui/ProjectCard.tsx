@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Project } from '@/types/project'
+import { projectHref } from '@/lib/projects'
 
 interface ProjectCardProps {
   project: Project
@@ -15,7 +16,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
   if (variant === 'compact') {
     return (
       <Link 
-        href={project.route}
+        href={projectHref(project)}
         className={`${baseClasses} ${className} h-full`}
       >
         <div className="p-4">
@@ -60,7 +61,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
   if (variant === 'featured') {
     return (
       <Link 
-        href={project.route}
+        href={projectHref(project)}
         className={`${baseClasses} lg:col-span-2 ${className} h-full`}
       >
         <div className="relative aspect-video overflow-hidden">
@@ -118,7 +119,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
   // Default variant
   return (
     <Link 
-      href={project.route}
+      href={projectHref(project)}
       className={`${baseClasses} ${className} p-4`}
     >
       <div className="relative aspect-4/3 overflow-hidden rounded-lg">

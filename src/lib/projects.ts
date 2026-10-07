@@ -1,10 +1,13 @@
 import { Project } from "@/types/project";
 
-// Sample project data - you can replace this with data from a CMS, API, or MDX files
+// Add a project here; its images and videos live in public/images/projects/<folder>/
 export const projects: Project[] = [
   {
     title: "TailorWrite",
+    slug: "tailorwrite",
+    featured: 1,
     featuredImage: "/images/projects/tailorwrite/landing.png",
+    video: "/images/projects/tailorwrite/tailorwrite.mp4",
     images: [
       "/images/projects/tailorwrite/landing.png",
       "/images/projects/tailorwrite/login.png",
@@ -19,12 +22,13 @@ export const projects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Python", "Flask", "Supabase", "Ollama", "Llama 3.1", "Docker", "Terraform", "AWS"],
     type: "Web Application",
     year: 2024,
-    route: "/projects/tailorwrite",
     github: "https://github.com/tailorwrite/tailorwrite"
   },
   {
     title: "Birds of Aotearoa",
+    slug: "birds-of-aotearoa",
     featuredImage: "/images/projects/birdsofaotearoa/projectscreenshot.png",
+    video: "/images/projects/birdsofaotearoa/birds-of-aotearoa.mp4",
     images: ["/images/projects/birdsofaotearoa/projectscreenshot.png"],
     icon: "",
     description: "Interactive field guide for New Zealand birds with identification features and habitat information.",
@@ -32,12 +36,14 @@ export const projects: Project[] = [
     technologies: ["HTML", "CSS", "JavaScript", "JSON"],
     type: "Web Application",
     year: 2024,
-    route: "/projects/birds-of-aotearoa",
-    link: "nzbirds.jamesrobionyrogers.com",
+    link: "https://nzbirds.jamesrobionyrogers.com",
     github: "https://github.com/JamesRobionyRogers/NZBirds-FrontEnd"
   },
   {
     title: "ExifTool GUI",
+    slug: "exiftool-gui",
+    featured: 2,
+    current: true,
     featuredImage: "/images/projects/exiftoolgui/projectscreenshot.png",
     images: ["/images/projects/exiftoolgui/projectscreenshot.png"],
     icon: "/images/projects/exiftoolgui/app-icon.png",
@@ -46,12 +52,13 @@ export const projects: Project[] = [
     technologies: ["Swift", "SwiftUI", "Exiftool", "MacOS", "XCode"],
     type: "MacOS App",
     year: 2025,
-    route: "/projects/exiftool-gui",
     // github: "https://github.com/jamesrobionyrogers/exiftool-gui"
   },
   {
     title: "Run It Twice",
+    slug: "run-it-twice",
     featuredImage: "/images/projects/runittwice/projectscreenshot.png",
+    video: "/images/projects/runittwice/runittwice.mp4",
     images: ["/images/projects/runittwice/projectscreenshot.png"],
     icon: "",
     description: "Code execution platform that runs code twice to detect non-deterministic behavior and race conditions.",
@@ -59,12 +66,14 @@ export const projects: Project[] = [
     technologies: ["Python", "Docker", "FastAPI", "PostgreSQL", "Redis"],
     type: "Terminal App",
     year: 2023,
-    route: "/projects/run-it-twice",
     github: "https://github.com/jamesrobionyrogers/run-it-twice"
   },
   {
     title: "FHCL",
+    slug: "fhcl",
+    featured: 3,
     featuredImage: "/images/projects/fhcl/projectscreenshot.png",
+    video: "/images/projects/fhcl/fhcl.mp4",
     images: [
       "/images/projects/fhcl/overview.png",
       "/images/projects/fhcl/projectscreenshot.png",
@@ -77,7 +86,6 @@ export const projects: Project[] = [
     technologies: ["Wire Framing", "Figma", "Vite", "React", "Tailwind CSS", "Github", "Crazydomains", "SEO", "Structured Data"],
     type: "Contracting",
     year: 2024,
-    route: "/projects/fhcl",
     link: "https://fhcl.nz",
     github: "https://github.com/FraserHydeContractingLtd/fhcl",
     testimonial: {
@@ -88,47 +96,26 @@ export const projects: Project[] = [
   }
 ];
 
-export function getProjectsFromTitles(titles: string[]) {
-    return titles.map(title => projects.find(project => project.title === title)).filter(Boolean) as Project[];
+export function projectHref(project: Project): string {
+  return `/projects/${project.slug}`;
 }
 
-// Utility functions for working with projects
 export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find(project => 
-    project.route.replace('/projects/', '') === slug
-  );
+  return projects.find(project => project.slug === slug);
 }
 
 export function getAllProjectSlugs(): string[] {
-  return projects.map(project => 
-    project.route.replace('/projects/', '')
-  );
+  return projects.map(project => project.slug);
 }
 
-export function getProjectsByType(type: string): Project[] {
-  return projects.filter(project => project.type === type);
-}
-
-export function getProjectsByTechnology(technology: string): Project[] {
-  return projects.filter(project => 
-    project.technologies.some(tech => 
-      tech.toLowerCase().includes(technology.toLowerCase())
-    )
-  );
-}
-
-export function getRecentProjects(limit: number = 3): Project[] {
+// Projects with a `featured` rank, most prominent first
+export function getFeaturedProjects(limit?: number): Project[] {
   return projects
-    .sort((a, b) => b.year - a.year)
+    .filter(project => project.featured !== undefined)
+    .sort((a, b) => a.featured! - b.featured!)
     .slice(0, limit);
 }
 
-export function getAllProjects(): Project[] {
-  return projects
+export function getCurrentProject(): Project | undefined {
+  return projects.find(project => project.current);
 }
-
-export function getFeaturedProjects(limit: number = 3): Project[] {
-  if (limit <= 1)         return [projects[0]] 
-  else if (limit == 2)    return [projects[0], projects[2]]
-  else                    return [projects[0], projects[2], projects[1]]
-} 
