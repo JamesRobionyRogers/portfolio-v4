@@ -192,7 +192,7 @@ One style that replaces the five that exist now.
 
 ### ProjectCard
 
-A single component with variants `default`, `compact` and `featured`. Delete `SmallProjectCard` and the commented-out copy in `Work.tsx`.
+A single component with variants `default`, `compact` and `featured`.
 
 - Shell: `group block bg-ink rounded-xl lg:rounded-2xl overflow-hidden` plus the focus ring (the whole card is the link).
 - Title: the `h3` role, `text-ink-fg group-hover:text-accent-on-ink transition-colors duration-200`.
@@ -247,7 +247,7 @@ The video-first project mosaic inside the hero frame (`ProjectBentoGrid.tsx`, us
 - **Overlay:** the image scrim, then the title (`h3` role, `text-ink-fg`) and description (`body` role, `text-ink-muted`, `line-clamp-2`) from `lg` up. It must use a real breakpoint.
 - **Hover:** `group-hover:scale-105` on the media at the `slow` timing, not a framer-motion scale on the tile.
 - **Alt text:** the project title, never a generic "project".
-- Use a stable `key` (`project.route` plus index), not the index alone.
+- Use a stable `key` (`project.slug` plus index), not the index alone.
 
 ### Marquee
 
@@ -288,27 +288,25 @@ These are ordered by how much each item affects mobile users. File references ar
 
 **P0: broken on phones**
 
-1. Hero marquee references missing TailorWrite images (`MarqueeDemoVertical.tsx:10-28`). Point them at the files that exist.
-2. Build the Navbar spec: add a background, a mobile menu and 44px targets. The links currently clip at 320px and disappear over ink (`Navbar.tsx:19-36`).
-3. `/projects`: the `text-8xl` headings, the bento that never stacks, and the forced side-by-side "All Projects" row (`projects/page.tsx:34-52`).
-4. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx:73-135`).
-5. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`Myself.tsx:18-22`).
-6. The footer overflows at 375px and is padded twice (`Footer.tsx:10-15`).
-7. Images of 1–5MB are served unoptimised (`fhcl/projectscreenshot.png`, `SelfPortrait.JPG`, the hero screenshots).
-8. The marquees ignore reduced motion (`globals.css:88-105`, `marquee.tsx:62-63`).
-9. BentoGrid: the mobile stack is permanently `hidden` and the 13-column grid renders at every width, so phones get thumbnail-sized tiles and every video (`ProjectBentoGrid.tsx:196-219`).
+1. Build the Navbar spec: add a background, a mobile menu and 44px targets. The links currently clip at 320px and disappear over ink (`Navbar.tsx:19-36`).
+2. `/projects`: the `text-8xl` headings, the bento that never stacks, and the forced side-by-side "All Projects" row (`projects/page.tsx:34-52`).
+3. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx:73-135`).
+4. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`Myself.tsx:18-22`).
+5. The footer overflows at 375px and is padded twice (`Footer.tsx:10-15`).
+6. Images of 1–5MB are served unoptimised (`fhcl/projectscreenshot.png`, `SelfPortrait.JPG`, the hero screenshots).
+7. The marquees ignore reduced motion (`globals.css:88-105`, `marquee.tsx:62-63`).
+8. BentoGrid: the mobile stack is permanently `hidden` and the 13-column grid renders at every width, so phones get thumbnail-sized tiles and every video (`ProjectBentoGrid.tsx:196-219`).
 
 **P1: usability and accessibility**
 
-10. Hero: `leading-1`, the undersized surname image and its wrong alt text, and `90vh` (`Header.tsx:8-58`). BentoGrid tiles use `alt="project"`, raw `neutral-900`, and an overlay behind the non-existent `3xl` breakpoint.
-11. Card text under 16px/14px, the title row squeezing, and the featured card clipping its text (`ProjectCard.tsx`).
-12. Contrast: `neutral-400` and `blue-400` on the canvas. Move to `fg-muted` and `accent`.
-13. Focus ring, skip link, landmarks, one `<h1>` per page, `<dl>` for project meta.
-14. `next/link` for internal links, and `rel="noopener noreferrer"` on external ones.
+9. Hero: `leading-1`, the undersized surname image and its wrong alt text, and `90vh` (`Header.tsx:8-58`). BentoGrid tiles use `alt="project"`, raw `neutral-900`, and an overlay behind the non-existent `3xl` breakpoint.
+10. Card text under 16px/14px, the title row squeezing, and the featured card clipping its text (`ProjectCard.tsx`).
+11. Contrast: `neutral-400` and `blue-400` on the canvas. Move to `fg-muted` and `accent`.
+12. Focus ring, skip link, landmarks, one `<h1>` per page, `<dl>` for project meta.
+13. `next/link` for internal links, and `rel="noopener noreferrer"` on external ones.
 
 **P2: consistency and cleanup**
 
-15. Put the colour, type, radius and motion tokens in `globals.css`, and remove the unused shadcn and dark-mode tokens, the Inter import, `.text-w-full` and `tw-animate-css`.
-16. Build `Container`, `Section`, `SectionHeading`, `Button`, `TextLink` and `Tag`, and move the existing pages onto them.
-17. Delete `SmallProjectCard.tsx`, both `pageAI.tsx` files, the commented-out card in `Work.tsx`, and `CodexBentoGrid.tsx` (entirely commented out).
-18. Replace the static metadata on `/projects`. Fix the missing `https://` in the Birds of Aotearoa link (`projects.ts:36`). Style `error.tsx` and add `not-found.tsx`.
+14. Put the colour, type, radius and motion tokens in `globals.css`, and remove the unused shadcn and dark-mode tokens, the Inter import, `.text-w-full` and `tw-animate-css`.
+15. Build `Container`, `Section`, `SectionHeading`, `Button`, `TextLink` and `Tag`, and move the existing pages onto them.
+16. Style `error.tsx` and `not-found.tsx`.
