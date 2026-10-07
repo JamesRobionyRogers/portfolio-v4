@@ -47,16 +47,17 @@ src/
 
 ## Adding a project
 
-1. Put the images (and an optional `.mp4`) in `public/images/projects/<folder>/`. Compress them first, because images are served unoptimised.
+1. Put the images (and an optional `.mp4`) in `public/images/projects/<folder>/`. Run `npm run optimise-images` and use the `.webp` files it writes, because images are served unoptimised.
 2. Add an entry to the `projects` array in `src/lib/projects.ts`:
 
    ```ts
    {
      title: "Project Name",
      slug: "project-name",              // page lives at /projects/project-name
-     featuredImage: "/images/projects/project-name/cover.png",
+     featuredImage: "/images/projects/project-name/cover.webp",
      video: "/images/projects/project-name/demo.mp4",   // optional, used in the home bento grid
-     images: ["/images/projects/project-name/cover.png"],
+     poster: "/images/projects/project-name/demo-poster.webp",   // optional, shown before the video plays
+     images: ["/images/projects/project-name/cover.webp"],
      icon: "",
      description: "One-line description for cards.",
      summary: "Longer summary for the project page.",

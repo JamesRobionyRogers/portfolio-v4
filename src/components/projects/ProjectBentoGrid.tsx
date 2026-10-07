@@ -103,7 +103,7 @@ const useVideoAutoPause = (
 
 // ------------------ COMPONENTS ------------------
 
-const Media = ({ src, isVideo, priority }: { src: string; isVideo: boolean; priority?: boolean }) => {
+const Media = ({ src, isVideo, priority, poster }: { src: string; isVideo: boolean; priority?: boolean; poster?: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   useVideoAutoPause(videoRef, isVideo);
 
@@ -112,6 +112,7 @@ const Media = ({ src, isVideo, priority }: { src: string; isVideo: boolean; prio
       <video
         ref={videoRef}
         src={src}
+        poster={poster}
         autoPlay
         loop
         muted
@@ -146,7 +147,7 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
             style={!mobile ? style : undefined}
         >
             <Link href={projectHref(project)}>
-                <Media src={media} isVideo={isVideo} priority={project.featured === 1} />
+                <Media src={media} isVideo={isVideo} priority={project.featured === 1} poster={project.poster} />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
