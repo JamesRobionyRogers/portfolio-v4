@@ -1,8 +1,6 @@
 # Design System
 
-The design system for the portfolio site. It takes the visual identity already in the code (light neutral canvas, dark ink cards, Saans, oversized uppercase display type, the year-range motif) and replaces the one-off Tailwind classes with named tokens and components. Every rule is written mobile-first.
-
-**Out of scope:** the blog (`/blog`, MDX, `TableOfContents`). It is being redesigned separately. It should adopt these tokens when that happens, but nothing here documents its current look.
+The design system for the portfolio site. It takes the visual identity already in the code (light neutral canvas, dark ink cards, Saans, oversized uppercase display type, the year-range motif) and replaces the one-off Tailwind classes with named tokens and components. Every rule is written mobile-first. It covers every page, the blog included.
 
 ## Principles
 
@@ -234,6 +232,42 @@ A single component with variants `default`, `compact` and `featured`.
 - A single image is full width, with the media radius and `sizes="(min-width:1024px) 90rem, 100vw"`.
 - A pair uses `grid grid-cols-1 sm:grid-cols-2 gap-4` and `sizes="(min-width:640px) 50vw, 100vw"`.
 - Every image has meaningful `alt` text.
+
+### Blog
+
+The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX in `src/content/blog/`. Its wrappers use the container, gutter and top offset directly; swap them for `Container` and `Section` once those exist.
+
+**Listing (`/blog`)**
+
+- The page title "Blog" uses the `h1` role in `fg`.
+- Posts are `PostCard`s in `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` with the card-list gap, newest first.
+- `PostCard` follows `ProjectCard`: the whole card is a `Link` with the focus ring, `bg-ink`, the card radius and card padding.
+- Inside the card: the date (`PostDate`, the `meta` role in `ink-subtle`), the title as an `<h2>` in the `h3` role (`text-ink-fg group-hover:text-accent-on-ink`), the description in the `body` role in `ink-muted` with `line-clamp-3`, then a `TagList` with `max={3}`.
+- Dates render as `<time dateTime>` in `en-NZ` long form ("23 March 2023").
+
+**Post header (`PostHeader`)**
+
+- An ink panel: `bg-ink` with the panel radius, `px-4 py-6 sm:p-8 lg:p-12`, `flex flex-col gap-6 lg:gap-8`.
+- It opens with a back link, a `Link` to `/blog` reading "← Blog" (arrow in `aria-hidden`), styled as `TextLink` with the `on-ink` tone.
+- Then the date, the post `<h1>`, the description (`text-base sm:text-lg leading-relaxed text-ink-muted max-w-prose`) and the full `TagList`.
+- Post titles are long sentences, so the `<h1>` uses the `h2` role with `break-words` rather than the `h1` role.
+- The cover image sits last, `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
+
+**Prose**
+
+- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the tokens: `fg` for text and headings, `canvas-sunken` for rules and borders, `ink` behind code blocks.
+- Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent` on hover and get the focus ring.
+- Images get the media radius. Inline code sits on `canvas-sunken` with no backticks.
+- The body keeps `prose`'s `65ch` measure and `break-words` so long URLs and inline code never overflow at 320px.
+- Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
+
+**Layout and table of contents**
+
+- The page is an `<article>`: the header, then `grid grid-cols-1 lg:grid-cols-12 gap-8` with the body at `lg:col-span-8` and the TOC at `lg:col-span-3 lg:col-start-10`.
+- `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `fg-muted`, `sticky top-28`.
+- It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `fg/70` and `hover:text-fg`.
+- The heading in view gets `aria-current="location"`, `text-fg` and `underline underline-offset-4 decoration-2`.
+- Clicking scrolls smoothly, or instantly under `prefers-reduced-motion`, and updates the URL hash.
 
 ### BentoGrid (hero showcase)
 
