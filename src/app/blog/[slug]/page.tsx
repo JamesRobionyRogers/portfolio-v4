@@ -48,12 +48,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <BlogShell as="article" className="gap-8 lg:gap-12 px-4 lg:px-6 pt-16 lg:pt-20 pb-8 lg:pb-12">
             <PostHeader post={post} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div id={POST_BODY_ID} className="prose blog-prose lg:col-span-8 break-words">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:px-12">
+                <div id={POST_BODY_ID} className="prose blog-prose max-w-none lg:col-span-10 break-words">
                     {content}
                 </div>
 
-                <aside className="hidden lg:block lg:col-span-3 lg:col-start-10">
+                <aside className="hidden lg:block lg:col-span-2">
                     <TableOfContents containerId={POST_BODY_ID} />
                 </aside>
             </div>

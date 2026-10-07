@@ -265,12 +265,12 @@ The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX 
 - The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-fg` body, headings, links and bold, and `ink-raised` rules and code-block backgrounds.
 - Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent-on-ink` on hover and get the focus ring.
 - Images get the media radius. Inline code is a chip, `bg-ink-chip rounded-md px-1.5 py-0.5`, with no backticks. `ink-raised` is too close to `ink` to read.
-- The body keeps `prose`'s `65ch` measure and `break-words` so long URLs and inline code never overflow at 320px.
+- The body drops `prose`'s `65ch` measure (`max-w-none`) to fill its 10 columns, and keeps `break-words` so long URLs and inline code never overflow at 320px.
 - Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
 
 **Layout and table of contents**
 
-- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8`, with the body at `lg:col-span-8` and the TOC at `lg:col-span-3 lg:col-start-10`.
+- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8 lg:px-12`, with the body at `lg:col-span-10` and the TOC at `lg:col-span-2`.
 - `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `ink-subtle`, `sticky top-28`.
 - It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `ink-subtle` and `hover:text-ink-fg`.
 - The heading in view gets `aria-current="location"`, `text-ink-fg` and `underline underline-offset-4 decoration-2`.
