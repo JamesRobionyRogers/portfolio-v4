@@ -97,7 +97,7 @@ const ProjectCard = ({ project, variant = 'default', className = '' }: ProjectCa
           src={project.featuredImage}
           alt={project.title}
           fill
-          className="object-cover transition-[transform,filter] duration-800 group-hover:scale-110 group-hover:blur-[5px]"
+          className="object-cover transition-[scale,filter] duration-800 group-hover:scale-110 group-hover:blur-[5px]"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {project.video && <ProjectCardVideo src={project.video} poster={project.poster} />}

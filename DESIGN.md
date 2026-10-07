@@ -102,7 +102,7 @@ Rules:
 
 - `shadow-lg`: photos that sit on the canvas (portraits).
 - `shadow-2xl`: the hero showcase frame only.
-- Ink cards have no shadow; the contrast with the canvas is enough.
+- Ink cards have no shadow; the contrast with the canvas is enough. The exception is the default card's hover video, which uses `shadow-2xl shadow-black/60` to lift it off the blurred image.
 - **Glass:** `bg-white/20 backdrop-blur-sm text-white`. Use it only on top of an image, for chips on featured cards.
 - **Image scrim:** `bg-gradient-to-t from-black/70 via-black/10 to-transparent`. Remove the broken overlay that references `--color-dark` and `--border-radius`.
 - **Sticky nav backdrop:** `bg-canvas/80 backdrop-blur-md`.
@@ -118,7 +118,7 @@ Rules:
 
 Rules:
 
-- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the video reveal, which fades in at the `slow` timing. Other card variants use `group-hover:scale-105`.
+- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the video reveal. Transition `scale` and `filter`, not `transform`: Tailwind v4's `scale-*` sets the `scale` property. The video waits for the blur (`delay-800`), then fades and grows in over `duration-1000 ease-out`, and fades out over `duration-500` on leave. Other card variants use `group-hover:scale-105`.
 - Transition only the properties you animate (`transition-colors`, `transition-transform`), not `transition-all`.
 - **Reduced motion is required.** The marquees use `motion-safe:animate-marquee`, and there is a global fallback:
 
@@ -199,7 +199,7 @@ A single component with variants `default`, `compact` and `featured`.
 - The meta line always reads `{type} · {year}`, using the `meta` role in `ink-subtle`.
 - The title row is `flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1`, with `shrink-0` on the meta.
 - Description: the `body` role in `ink-muted`, clamped with `line-clamp-3`.
-- Media is `aspect-4/3` with the media radius. On the `default` variant, hover (or keyboard focus) blurs and zooms the image and fades in the project's `video` as a centred 16:9 frame (`w-5/6`, media radius) with the blurred image still visible around it (`projects/ProjectCardVideo.tsx`). The video is decorative (`aria-hidden`, not focusable) and loads nothing until the first reveal; touch and reduced-motion users keep the static image.
+- Media is `aspect-4/3` with the media radius. On the `default` variant, hover (or keyboard focus) blurs and zooms the image and fades in the project's `video` as a centred 16:9 frame (`w-5/6`, media radius, `shadow-2xl shadow-black/60`) with the blurred image still visible around it (`projects/ProjectCardVideo.tsx`). The video is decorative (`aria-hidden`, not focusable) and loads nothing until the first reveal; touch and reduced-motion users keep the static image.
 - **Featured on mobile:** below `sm` the text stacks under the image (`relative sm:absolute`) so it is never clipped. The overlay layout and scrim apply from `sm` up.
 - The `sizes` values must match the rendered width (e.g. `sizes="24px"` for icons).
 
