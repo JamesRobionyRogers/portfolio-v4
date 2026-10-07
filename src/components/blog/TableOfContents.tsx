@@ -61,10 +61,10 @@ export default function TableOfContents({ containerId }: { containerId: string }
 
   return (
     <nav aria-labelledby="toc-heading" className="sticky top-28 flex flex-col gap-2">
-      <h2 id="toc-heading" className="text-sm sm:text-base font-semibold uppercase tracking-wide text-ink-subtle">
+      <h2 id="toc-heading" className="text-sm sm:text-base font-semibold uppercase tracking-wide text-white">
         On this page
       </h2>
-      <ul>
+      <ul className="pl-2">
         {headings.map((heading) => (
           <li key={heading.id} className={cn(heading.level === 3 && 'pl-4')}>
             <a

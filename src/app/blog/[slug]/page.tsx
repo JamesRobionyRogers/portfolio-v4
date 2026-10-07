@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     {content}
                 </div>
 
-                <aside className="hidden lg:block lg:col-span-2 lg:col-start-11">
+                <aside className="hidden lg:block lg:col-span-3 lg:col-start-10">
                     <TableOfContents containerId={POST_BODY_ID} />
                 </aside>
             </div>
