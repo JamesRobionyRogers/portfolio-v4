@@ -1,17 +1,11 @@
 import type { NextConfig } from "next";
-import createMDX from '@next/mdx'
- 
-const nextConfig: NextConfig = {
-  // Configure `pageExtensions` to include markdown and MDX files
-  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  images: {
-    domains: ['github.com'],
-  },
-}
- 
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-  extension: /\.(md|mdx)$/, 
-})
 
-export default withMDX(nextConfig);
+// Matches what `actions/configure-pages` injects in CI, so local builds behave like production
+const nextConfig: NextConfig = {
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+};
+
+export default nextConfig;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/mdx';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import TableOfContents from '@/components/ui/TableOfContents';
@@ -52,9 +53,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <nav className="mb-8 text-neutral-400" aria-label="Breadcrumb">
                         <ol className="list-reset flex text-sm">
                             <li>
-                                <a href="/blogs" className="hover:underline">
+                                <Link href="/blog" className="hover:underline">
                                     Blogs
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <span className="mx-2">/</span>

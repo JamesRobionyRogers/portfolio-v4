@@ -1,24 +1,18 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import ProjectCard from '@/components/ui/ProjectCard'
 import { getFeaturedProjects, projects } from '@/lib/projects'
 
-const featuredProjects = getFeaturedProjects()
+const [mainProject, ...sideProjects] = getFeaturedProjects(3)
 const allProjects = projects
 
-// Generate metadata for SEO
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  await params
-
-
-  return {
-    title: `Projects`,
+export const metadata: Metadata = {
+  title: 'Projects',
+  description: 'Explore my portfolio of projects.',
+  openGraph: {
+    title: 'Projects',
     description: 'Explore my portfolio of projects.',
-    openGraph: {
-      title: `Projects`,
-      description: 'Explore my portfolio of projects.',
-      images: [],
-    },
-  }
+  },
 }
 
 // Main Projects Page
@@ -30,13 +24,14 @@ const ProjectsPage = () => {
       <div className="grid grid-cols-12 gap-4 bg-neutral-200 rounded-xl p-4">
         {/* Main Featured Project */}
         <div className="col-span-8">
-          <ProjectCard project={featuredProjects[0]} variant="featured" />
+          <ProjectCard project={mainProject} variant="featured" />
         </div>
 
         {/* Second and third projects */}
         <div className="col-span-4 flex flex-col gap-4 justify-between">
-          <ProjectCard project={projects[2]} variant="compact" />
-          <ProjectCard project={projects[4]} variant="compact" />
+          {sideProjects.map((project) => (
+            <ProjectCard key={project.slug} project={project} variant="compact" />
+          ))}
         </div>
       </div>
 

@@ -18,15 +18,14 @@ Personal portfolio at `jamesrobionyrogers.com`. Next.js App Router, Tailwind v4,
 
 ## Architecture
 
-- Project data lives in `src/lib/projects.ts`. `src/content/projects/` and `src/content/case-studies/` are not read by any code.
+- Project data lives in `src/lib/projects.ts`. The bento grid, featured cards and navbar derive from its `featured`, `current` and `video` fields; never hard-code project lists or media paths in components.
 - Only the blog reads MDX (`src/lib/mdx.ts`, which loads `src/content/blog/`).
 - Tailwind is configured in CSS (`src/app/globals.css`). There is no `tailwind.config`.
 - `src/config/site.ts` is meant to hold nav and social links. Use it instead of hard-coding URLs.
-- `pageAI.tsx` files and `SmallProjectCard.tsx` are dead code. Don't copy patterns from them.
 
 ## Gotchas
 
-- The build is a static export (`actions/configure-pages` injects `output: 'export'`). No API routes, server actions, middleware or runtime `headers()`/`cookies()`.
+- The build is a static export (`output: 'export'` in `next.config.ts`). No API routes, server actions, middleware or runtime `headers()`/`cookies()`.
 - Every dynamic route needs `generateStaticParams`, or the Pages build fails.
 - Images are served unoptimised, so `next/image` does no resizing. Compress images before adding them to `public/`.
 - Image paths are case-sensitive on Pages but not on macOS. Match the filename casing exactly (`SelfPortrait.JPG`).

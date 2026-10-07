@@ -1,3 +1,5 @@
+export const siteUrl = "https://jamesrobionyrogers.com";
+
 export type SiteConfig = {
     email: string;
     linkedin: string;
