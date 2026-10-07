@@ -199,7 +199,7 @@ A single component with variants `default`, `compact` and `featured`.
 - The meta line always reads `{type} · {year}`, using the `meta` role in `ink-subtle`.
 - The title row is `flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1`, with `shrink-0` on the meta.
 - Description: the `body` role in `ink-muted`, clamped with `line-clamp-3`.
-- Media is `aspect-4/3` with the media radius. On the `default` variant, hover (or keyboard focus) blurs and zooms the image and fades in the project's `video` over it (`projects/ProjectCardVideo.tsx`). The video is decorative (`aria-hidden`, not focusable) and loads nothing until the first reveal; touch and reduced-motion users keep the static image.
+- Media is `aspect-4/3` with the media radius. On the `default` variant, hover (or keyboard focus) blurs and zooms the image and fades in the project's `video` as a centred 16:9 frame (`w-5/6`, media radius) with the blurred image still visible around it (`projects/ProjectCardVideo.tsx`). The video is decorative (`aria-hidden`, not focusable) and loads nothing until the first reveal; touch and reduced-motion users keep the static image.
 - **Featured on mobile:** below `sm` the text stacks under the image (`relative sm:absolute`) so it is never clipped. The overlay layout and scrim apply from `sm` up.
 - The `sizes` values must match the rendered width (e.g. `sizes="24px"` for icons).
 

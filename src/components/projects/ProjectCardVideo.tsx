@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const CAN_REVEAL = '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
 
-// Fades a decorative video over the card image while its parent link is hovered or focused.
+// Fades a decorative 16:9 video in, centred over the blurred card image, while its parent link is hovered or focused.
 // Nothing loads until the first reveal, and touch or reduced-motion users never trigger one.
 const ProjectCardVideo = ({ src, poster }: { src: string; poster?: string }) => {
   const ref = useRef<HTMLVideoElement>(null)
@@ -56,7 +56,7 @@ const ProjectCardVideo = ({ src, poster }: { src: string; poster?: string }) => 
       disablePictureInPicture
       aria-hidden
       tabIndex={-1}
-      className={`pointer-events-none absolute inset-0 size-full object-cover transition-opacity duration-500 ease-in-out ${active ? 'opacity-100' : 'opacity-0'}`}
+      className={`pointer-events-none absolute top-1/2 left-1/2 w-5/6 aspect-video -translate-1/2 rounded-lg lg:rounded-xl object-cover transition-[opacity,scale] duration-500 ease-in-out ${active ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
     />
   )
 }
