@@ -6,7 +6,7 @@
   --color-canvas: var(--color-neutral-100);
   --color-canvas-sunken: var(--color-neutral-200);
   --color-fg: var(--color-neutral-900);
-  --color-fg-muted: var(--color-neutral-600);
+  --color-fg-muted: var(--color-neutral-400);
 
   --color-ink: var(--color-neutral-900);
   --color-ink-raised: var(--color-neutral-800);
@@ -15,7 +15,7 @@
   --color-ink-muted: var(--color-neutral-300);
   --color-ink-subtle: var(--color-neutral-400);
 
-  --color-accent: var(--color-blue-700);
+  --color-accent: var(--color-blue-400);
   --color-accent-on-ink: var(--color-blue-400);
   --color-focus: var(--color-blue-600);
   --color-highlight: color-mix(in oklab, var(--color-green-400) 40%, transparent);
