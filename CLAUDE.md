@@ -10,11 +10,10 @@ Personal portfolio at `jamesrobionyrogers.com`. Next.js App Router, Tailwind v4,
 
 ## Design system
 
-- Follow `DESIGN.md` for all non-blog UI: tokens, type scale, components and mobile standards.
+- Follow `DESIGN.md` for all UI, including the blog: tokens, type scale, components and mobile standards.
 - Use the semantic tokens (`bg-canvas`, `text-fg-muted`, `bg-ink`) in new code. Do not use raw `neutral-*`, `gray-*`, hex or arbitrary values.
 - Write classes mobile-first: unprefixed for 320px, then `sm:` / `lg:` to scale up. Never rely on the `overflow-x-hidden` on `<body>` to hide overflow.
 - Before building a new button, tag, heading or section wrapper, check for the `DESIGN.md` component. Pick it off the migration backlog if it doesn't exist yet.
-- The blog (`src/app/blog/`, `src/content/blog/`, `TableOfContents`) is excluded from `DESIGN.md` and is being redesigned. Don't restyle it unless asked.
 
 ## Architecture
 

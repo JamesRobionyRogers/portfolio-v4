@@ -1,8 +1,6 @@
 # Design System
 
-The design system for the portfolio site. It takes the visual identity already in the code (light neutral canvas, dark ink cards, Saans, oversized uppercase display type, the year-range motif) and replaces the one-off Tailwind classes with named tokens and components. Every rule is written mobile-first.
-
-**Out of scope:** the blog (`/blog`, MDX, `TableOfContents`). It is being redesigned separately. It should adopt these tokens when that happens, but nothing here documents its current look.
+The design system for the portfolio site. It takes the visual identity already in the code (light neutral canvas, dark ink cards, Saans, oversized uppercase display type, the year-range motif) and replaces the one-off Tailwind classes with named tokens and components. Every rule is written mobile-first. It covers every page, the blog included.
 
 ## Principles
 
@@ -234,6 +232,50 @@ A single component with variants `default`, `compact` and `featured`.
 - A single image is full width, with the media radius and `sizes="(min-width:1024px) 90rem, 100vw"`.
 - A pair uses `grid grid-cols-1 sm:grid-cols-2 gap-4` and `sizes="(min-width:640px) 50vw, 100vw"`.
 - Every image has meaningful `alt` text.
+
+### Blog
+
+The blog lives in `src/app/blog/` and `src/components/blog/`, with posts as MDX in `src/content/blog/`. Both pages sit inside the same full-page ink shell as project detail. There are no cards.
+
+**Shell (`BlogShell`)**
+
+- `bg-ink` with the panel radius, `mx-4 sm:mx-6 lg:mx-8 mt-4 lg:mt-8 mb-4 lg:mb-8`, padding `px-4 sm:px-6 pt-16 pb-8 lg:p-16` (equal on all sides from `lg` up), and `flex flex-col gap-8 lg:gap-12`.
+- It is at least one screen tall: its bottom margin meets the viewport's bottom edge and the footer sits just below the fold.
+- That height comes from the `body:has(.blog-shell)` rule in `globals.css`, which works without hard-coding the nav height. It makes the body a grid, stretches the nav and main rows to `100svh` with a spanning `::before`, and `grow`s the shell inside a flex `main`.
+- It renders a `<div>` by default and an `<article>` on post pages (`as="article"`). Project detail keeps its own shell.
+- All text inside uses the `ink-*` colours.
+
+**Listing (`/blog`)**
+
+- The title "Blog" uses the `h1` role in `ink-fg`.
+- `PostList` is a `<ul>` of divided rows, `border-t` plus a `border-b` per row in `ink-raised`, newest first.
+- Each row is one `Link` with the focus ring: `flex flex-col sm:flex-row gap-2 sm:gap-6 py-6 lg:py-8`.
+- The date (`PostDate`, the `meta` role in `ink-subtle`) is a fixed `sm:w-40` column, so the title starts close beside it.
+- The title is an `<h2>`, `text-xl lg:text-2xl font-semibold leading-tight text-ink-fg group-hover:text-accent-on-ink`. The description uses the `body` role in `ink-muted` at `max-w-prose`, followed by a `TagList` with `max={4}`.
+- Dates render as `<time dateTime>` in `en-NZ` long form ("23 March 2023").
+
+**Post header (`PostHeader`)**
+
+- It opens with a breadcrumb: a `<nav aria-label="Breadcrumb">` holding a `Link` to `/blog`, then `/`, then the post title (`aria-current="page"`, `truncate`). The breadcrumb text is `text-sm font-medium text-ink-subtle`, and the link has `min-h-11` and the focus ring.
+- Next comes the post `<h1>`, sentence case: `text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight break-words text-ink-fg`. Post titles are full sentences, so they skip the uppercase `h1` role.
+- Below the title, a row holds the date (`PostDate` in `ink-subtle`) and the full `TagList`: `flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6`.
+- The cover image comes last: `aspect-video` with the media radius, `priority`, and `alt` set to the post title.
+
+**Prose**
+
+- The MDX body is `prose blog-prose`. `.blog-prose` in `globals.css` maps the typography plugin's colours onto the ink tokens: `ink-fg` body, headings, links and bold, and `ink-raised` rules and code-block backgrounds.
+- Headings are `font-semibold` with `scroll-mt-28` so anchor jumps clear the sticky nav. Links are `font-semibold`, turn `accent-on-ink` on hover and get the focus ring.
+- Images get the media radius. Inline code is a chip, `bg-ink-chip rounded-md px-1.5 py-0.5`, with no backticks. `ink-raised` is too close to `ink` to read.
+- The body drops `prose`'s `65ch` measure (`max-w-none`) to fill its 8 columns, and keeps `break-words` so long URLs and inline code never overflow at 320px.
+- Posts start at `##`. The page's only `<h1>` is the post title, so never write a `#` heading in MDX.
+
+**Layout and table of contents**
+
+- Below the header: `grid grid-cols-1 lg:grid-cols-12 gap-8`, with the body at `lg:col-span-8` and the TOC pinned right at `lg:col-span-2 lg:col-start-11`.
+- `TableOfContents` shows from `lg` up only. It is a `<nav>` labelled by an `<h2>` "On this page" in the `eyebrow` role and `ink-subtle`, `sticky top-28`.
+- It lists the body's `h2` and `h3` (indented `pl-4`). Links are `text-base`, `min-h-11`, with the focus ring, in `ink-subtle` and `hover:text-ink-fg`.
+- The heading in view gets `aria-current="location"`, `text-accent-on-ink` and `underline underline-offset-4 decoration-2`.
+- Clicking scrolls smoothly, or instantly under `prefers-reduced-motion`, and updates the URL hash.
 
 ### BentoGrid (hero showcase)
 
