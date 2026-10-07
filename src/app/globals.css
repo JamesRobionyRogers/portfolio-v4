@@ -66,3 +66,44 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Blog post body: maps the typography plugin's colours onto the tokens. Pair with `prose` */
+.prose.blog-prose {
+  --tw-prose-body: var(--color-fg);
+  --tw-prose-headings: var(--color-fg);
+  --tw-prose-lead: var(--color-fg);
+  --tw-prose-links: var(--color-fg);
+  --tw-prose-bold: var(--color-fg);
+  --tw-prose-counters: var(--color-fg);
+  --tw-prose-bullets: var(--color-fg-muted);
+  --tw-prose-hr: var(--color-canvas-sunken);
+  --tw-prose-quotes: var(--color-fg);
+  --tw-prose-quote-borders: var(--color-canvas-sunken);
+  --tw-prose-captions: var(--color-fg);
+  --tw-prose-kbd: var(--color-fg);
+  --tw-prose-code: var(--color-fg);
+  --tw-prose-pre-code: var(--color-ink-muted);
+  --tw-prose-pre-bg: var(--color-ink);
+  --tw-prose-th-borders: var(--color-canvas-sunken);
+  --tw-prose-td-borders: var(--color-canvas-sunken);
+
+  :where(h2, h3, h4) {
+    @apply font-semibold scroll-mt-28;
+  }
+
+  :where(a) {
+    @apply font-semibold underline-offset-4 transition-colors duration-200 hover:text-accent;
+  }
+
+  :where(a):focus-visible {
+    @apply outline-2 outline-offset-2 outline-focus;
+  }
+
+  :where(img) {
+    @apply rounded-lg lg:rounded-xl;
+  }
+
+  :where(:not(pre) > code) {
+    @apply rounded-md bg-canvas-sunken px-1.5 py-0.5 font-medium before:content-none after:content-none;
+  }
+}

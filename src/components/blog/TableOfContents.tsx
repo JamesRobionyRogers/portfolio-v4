@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface Heading {
   id: string;
@@ -8,70 +9,50 @@ interface Heading {
   level: number;
 }
 
-export default function TableOfContents() {
+const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+
+// Lists the h2/h3 headings inside `containerId` and highlights the one in view
+export default function TableOfContents({ containerId }: { containerId: string }) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
-    // Extract headings from the article
-    const article = document.querySelector('article');
-    if (!article) return;
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-    const elements = article.querySelectorAll('h1, h2, h3, h4');
-    const extractedHeadings: Heading[] = [];
-
+    const elements = Array.from(container.querySelectorAll<HTMLElement>('h2, h3'));
     elements.forEach((element) => {
-      const id = element.id || element.textContent?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || '';
-      if (!element.id) {
-        element.id = id;
-      }
-
-      extractedHeadings.push({
-        id,
-        text: element.textContent || '',
-        level: parseInt(element.tagName[1]),
-      });
+      if (!element.id) element.id = slugify(element.textContent || '');
     });
 
-    setHeadings(extractedHeadings);
+    setHeadings(elements.map((element) => ({
+      id: element.id,
+      text: element.textContent || '',
+      level: Number(element.tagName[1]),
+    })));
 
-    // Intersection observer for active heading
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveId(entry.target.id);
         });
       },
-      {
-        rootMargin: '-100px 0px -66%',
-        threshold: 1,
-      }
+      { rootMargin: '-100px 0px -66%', threshold: 1 }
     );
 
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
-
-    return () => {
-      elements.forEach((element) => {
-        observer.unobserve(element);
-      });
-    };
-  }, []);
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [containerId]);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
     const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - offset,
-        behavior: 'smooth',
-      });
-    }
+    if (!element) return;
+
+    e.preventDefault();
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // The heading's scroll-margin-top (set in globals.css) clears the sticky nav
+    element.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    history.replaceState(null, '', `#${id}`);
   };
 
   if (headings.length === 0) {
@@ -79,22 +60,21 @@ export default function TableOfContents() {
   }
 
   return (
-    <nav className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-auto">
-      <h3 className="text-sm font-semibold text-neutral-100 mb-4">On this page</h3>
-      <ul className="space-y-2 text-sm">
+    <nav aria-labelledby="toc-heading" className="sticky top-28 flex flex-col gap-2">
+      <h2 id="toc-heading" className="text-sm sm:text-base font-semibold uppercase tracking-wide text-fg-muted">
+        On this page
+      </h2>
+      <ul>
         {headings.map((heading) => (
-          <li
-            key={heading.id}
-            style={{ paddingLeft: `${(heading.level - 1) * 0.75}rem` }}
-          >
+          <li key={heading.id} className={cn(heading.level === 3 && 'pl-4')}>
             <a
               href={`#${heading.id}`}
               onClick={(e) => handleClick(e, heading.id)}
-              className={`block py-1 transition-colors hover:text-sky-500 ${
-                activeId === heading.id
-                  ? 'text-sky-500 font-medium'
-                  : 'text-neutral-400'
-              }`}
+              aria-current={activeId === heading.id ? 'location' : undefined}
+              className={cn(
+                'flex items-center min-h-11 py-1 text-base transition-colors duration-200 hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus',
+                activeId === heading.id ? 'text-fg underline underline-offset-4 decoration-2' : 'text-fg/70'
+              )}
             >
               {heading.text}
             </a>
