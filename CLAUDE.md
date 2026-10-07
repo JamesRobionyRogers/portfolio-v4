@@ -21,7 +21,7 @@ Personal portfolio at `jamesrobionyrogers.com`. Next.js App Router, Tailwind v4,
 - Project data lives in `src/lib/projects.ts`. The bento grid, featured cards and navbar derive from its `featured`, `current` and `video` fields; never hard-code project lists or media paths in components.
 - Only the blog reads MDX (`src/lib/mdx.ts`, which loads `src/content/blog/`).
 - Tailwind is configured in CSS (`src/app/globals.css`). There is no `tailwind.config`.
-- `src/config/site.ts` is meant to hold nav and social links. Use it instead of hard-coding URLs.
+- `src/config/site.ts` holds the site name, URL, description, nav and social links. Read from `siteConfig` instead of hard-coding them.
 
 ## Gotchas
 

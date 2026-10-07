@@ -7,7 +7,7 @@ The design system for the portfolio site. It takes the visual identity already i
 ## Principles
 
 1. **Mobile-first.** Unprefixed classes are for a 320px screen. Use `sm:`, `md:` and `lg:` only to scale up. If a layout only works because of `overflow-x-hidden`, it is broken.
-2. **Two surfaces, strong contrast.** A light canvas holds dark ink cards. Anything placed on either surface must meet WCAG AA on it.
+2. **Two surfaces, strong contrast.** A light canvas holds dark ink cards. Anything placed on either surface must meet WCAG AA on it, except `fg-muted` and `accent` on the canvas, which deliberately keep the lighter brand greys and blue.
 3. **Type carries the brand.** Display headings are huge, uppercase and tight. Everything else is quiet, so the display type stands out.
 4. **Tokens, not values.** Components use semantic tokens (`bg-canvas`, `text-ink-muted`) and never raw `neutral-*`, `gray-*`, hex or arbitrary values.
 5. **One component per pattern.** Buttons, tags, headings and section wrappers each have exactly one implementation.
@@ -25,13 +25,14 @@ Every colour is from the Tailwind `neutral` scale, plus one blue accent and the 
 | `canvas` | `neutral-100` `#f5f5f5` | Page background |
 | `canvas-sunken` | `neutral-200` `#e5e5e5` | Trays that group cards (e.g. the featured bento) |
 | `fg` | `neutral-900` `#171717` | Primary text on the canvas |
-| `fg-muted` | `neutral-600` `#525252` | Secondary text on the canvas (nav status, captions). Replaces `neutral-400`, which fails AA |
+| `fg-muted` | `neutral-400` `#a3a3a3` | Secondary text on the canvas (nav status, captions). Below AA by choice; keep it to short, non-essential text |
 | `ink` | `neutral-900` `#171717` | Dark surfaces: cards, the project detail shell, the CTA panel |
 | `ink-raised` | `neutral-800` `#262626` | A panel nested inside `ink`, and chips on `ink` |
+| `ink-chip` | `neutral-700` `#404040` | Chips on an `ink-raised` panel (project detail) |
 | `ink-fg` | `neutral-50` `#fafafa` | Primary text on `ink` |
 | `ink-muted` | `neutral-300` `#d4d4d4` | Body text on `ink` |
 | `ink-subtle` | `neutral-400` `#a3a3a3` | Meta and labels on `ink`. Only on `ink`, never on the canvas |
-| `accent` | `blue-700` `#1d4ed8` | Links and hover on the canvas (the footer). Replaces `blue-400` there, which is about 2.5:1 |
+| `accent` | `blue-400` `#60a5fa` | Links and hover on the canvas (the footer). Below AA by choice, like `fg-muted` |
 | `accent-on-ink` | `blue-400` `#60a5fa` | Hover accent on `ink` (card titles) |
 | `focus` | `blue-600` `#2563eb` | Focus ring on every surface |
 | `highlight` | `green-400 / 40%` | `::selection` background. This is the site's signature detail, so keep it |
@@ -40,13 +41,12 @@ Rules:
 
 - Pick text colours by the surface they sit on. `fg*` goes on `canvas` and `ink-*` goes on `ink`. Do not mix them.
 - Only one accent hue (blue). Remove `sky-*` and any second accent.
-- Delete the unused shadcn tokens (`chart-*`, `sidebar-*`, `popover`, `destructive`) and the `.dark` block, unless dark mode actually ships. If dark mode ships, the canvas becomes `neutral-950` and ink surfaces become `neutral-900`, with the same token names.
+- If dark mode ships, the canvas becomes `neutral-950` and ink surfaces become `neutral-900`, with the same token names.
 
 ### Typography
 
 - **Family:** Saans only, loaded with `next/font/local`, exposed as `--font-sans`, and set as the default family.
 - **Weights:** 500 (medium), 600 (semibold), 700 (bold). Those are the only files that exist. Do not use `font-black`: there is no 900 file, so it renders as 700.
-- **Remove** the Google Fonts `@import` of Inter and `--font-title`. Nothing uses them, and they block rendering on mobile.
 
 Type scale (fluid sizes use `clamp()` and are safe from 320px up):
 
@@ -118,7 +118,7 @@ Rules:
 
 Rules:
 
-- The card image hover is `group-hover:scale-105`. Drop the blur (it is expensive on mobile GPUs) and the `duration-800` variant.
+- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the planned video reveal (see the backlog). Other card variants use `group-hover:scale-105`.
 - Transition only the properties you animate (`transition-colors`, `transition-transform`), not `transition-all`.
 - **Reduced motion is required.** The marquees use `motion-safe:animate-marquee`, and there is a global fallback:
 
@@ -141,7 +141,7 @@ These are the Tailwind defaults; do not add custom breakpoints.
 
 ## Components
 
-Each of these lives in `src/components/ui/` as a single component. Merge class names with `cn()`, and define variants with `class-variance-authority`, which is already installed.
+Generic primitives (`Tag`, `Button`, `Marquee`…) live in `src/components/ui/`; feature components live in `layout/`, `home/`, `projects/` and `blog/`. Merge class names with `cn()`, and define variants as a plain object map (see `ui/Tag.tsx`).
 
 ### Container and Section
 
@@ -199,7 +199,7 @@ A single component with variants `default`, `compact` and `featured`.
 - The meta line always reads `{type} · {year}`, using the `meta` role in `ink-subtle`.
 - The title row is `flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1`, with `shrink-0` on the meta.
 - Description: the `body` role in `ink-muted`, clamped with `line-clamp-3`.
-- Media is `aspect-4/3` with the media radius and `group-hover:scale-105` at the `slow` timing.
+- Media is `aspect-4/3` with the media radius. On the `default` variant, hover blurs and zooms the image and (once built) fades in the project's `video` over it; touch and reduced-motion users keep the static image.
 - **Featured on mobile:** below `sm` the text stacks under the image (`relative sm:absolute`) so it is never clipped. The overlay layout and scrim apply from `sm` up.
 - The `sizes` values must match the rendered width (e.g. `sizes="24px"` for icons).
 
@@ -237,10 +237,10 @@ A single component with variants `default`, `compact` and `featured`.
 
 ### BentoGrid (hero showcase)
 
-The video-first project mosaic inside the hero frame (`ProjectBentoGrid.tsx`, used by `Header.tsx`). It replaced the hero marquee.
+The video-first project mosaic inside the hero frame (`projects/ProjectBentoGrid.tsx`, used by `home/Hero.tsx`). It replaced the hero marquee.
 
-- **Props:** `projects` in display order, plus an optional `mediaConfig` of `{ projectTitle, media }` that picks the exact image or video per project. Without an override a tile uses `project.video`, then `project.featuredImage`.
-- **Layout from `lg` up:** a 13×8 grid in an `aspect-video` frame with `gap-4`. The featured project (the first with `featured`, else the first) takes the centre (`col 4 / span 7`, `row 3 / span 4`). The rest fill 11 fixed slots around it in order and wrap if there are more.
+- **Props:** `projects` from `projects.ts`. Each tile uses `project.video`, then `project.featuredImage`.
+- **Layout from `lg` up:** a 13×8 grid in an `aspect-video` frame with `gap-4`. The project with `featured: 1` (else the first) takes the centre (`col 4 / span 7`, `row 3 / span 4`). The rest cycle through the 11 fixed slots around it.
 - **Below `lg`:** a single column of `aspect-video` tiles with `gap-4`, capped at 4 tiles so a phone isn't loading a dozen videos. The 13-column grid must never render on a phone.
 - **Tile shell:** `bg-ink` with the card radius (`rounded-xl lg:rounded-2xl`) and no shadow. The whole tile is the link, with the focus ring.
 - **Media:** fills the tile with `object-cover`. Videos are `muted loop playsInline`, play only while at least half visible (IntersectionObserver), and preload `metadata` except on the featured tile. Under `prefers-reduced-motion` they don't autoplay; show the poster frame.
@@ -251,7 +251,7 @@ The video-first project mosaic inside the hero frame (`ProjectBentoGrid.tsx`, us
 
 ### Marquee
 
-- Keep the magicui `Marquee`. Its animation classes become `motion-safe:`.
+- `ui/Marquee.tsx` (from magicui). Its animation classes are `motion-safe:`.
 - **Hero on mobile:** show one column, without rotation, inside `aspect-[4/5] sm:aspect-video`.
 - **Tech strip:** items are `text-xl sm:text-3xl` with icons `size-8 sm:size-14`. Use a bleed of `-mx-4 sm:-mx-6 lg:-mx-8` to match the gutter, and build the items by mapping an array rather than repeating markup.
 
@@ -271,7 +271,7 @@ These apply to every component and page and are checked on each PR.
   - Pre-generate AVIF/WebP files at 640, 1024 and 1600px (a `sharp` script or `next-image-export-optimizer`).
   - No image shipped to a phone may be over 300KB.
   - Only the hero image gets `priority`.
-- **Motion:** honour `prefers-reduced-motion` everywhere, and never animate `blur` or `filter` on scroll or hover.
+- **Motion:** honour `prefers-reduced-motion` everywhere. The only `blur` animation allowed is the default project card hover.
 - **Landmarks:** `<header>`, then `<main id="main">`, then `<footer>`. Never nest a `<main>`.
 
 ## Voice and content
@@ -288,25 +288,26 @@ These are ordered by how much each item affects mobile users. File references ar
 
 **P0: broken on phones**
 
-1. Build the Navbar spec: add a background, a mobile menu and 44px targets. The links currently clip at 320px and disappear over ink (`Navbar.tsx:19-36`).
-2. `/projects`: the `text-8xl` headings, the bento that never stacks, and the forced side-by-side "All Projects" row (`projects/page.tsx:34-52`).
-3. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx:73-135`).
-4. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`Myself.tsx:18-22`).
-5. The footer overflows at 375px and is padded twice (`Footer.tsx:10-15`).
+1. Build the Navbar spec: add a background, a mobile menu and 44px targets. The links currently clip at 320px and disappear over ink (`layout/Navbar.tsx`).
+2. `/projects`: the `text-8xl` headings, the bento that never stacks, and the forced side-by-side "All Projects" row (`projects/page.tsx`).
+3. Project detail: title overflow, triple gutter, gallery pairs at about 100px (`[slug]/page.tsx`).
+4. The `lead` paragraph is 48px on mobile, and `pt-56` leaves a 224px gap (`home/About.tsx`).
+5. The footer overflows at 375px and is padded twice (`layout/Footer.tsx`).
 6. Images of 1–5MB are served unoptimised (`fhcl/projectscreenshot.png`, `SelfPortrait.JPG`, the hero screenshots).
-7. The marquees ignore reduced motion (`globals.css:88-105`, `marquee.tsx:62-63`).
-8. BentoGrid: the mobile stack is permanently `hidden` and the 13-column grid renders at every width, so phones get thumbnail-sized tiles and every video (`ProjectBentoGrid.tsx:196-219`).
+7. BentoGrid: the mobile stack is permanently `hidden` and the 13-column grid renders at every width, so phones get thumbnail-sized tiles and every video (`projects/ProjectBentoGrid.tsx`).
 
 **P1: usability and accessibility**
 
-9. Hero: `leading-1`, the undersized surname image and its wrong alt text, and `90vh` (`Header.tsx:8-58`). BentoGrid tiles use `alt="project"`, raw `neutral-900`, and an overlay behind the non-existent `3xl` breakpoint.
-10. Card text under 16px/14px, the title row squeezing, and the featured card clipping its text (`ProjectCard.tsx`).
-11. Contrast: `neutral-400` and `blue-400` on the canvas. Move to `fg-muted` and `accent`.
-12. Focus ring, skip link, landmarks, one `<h1>` per page, `<dl>` for project meta.
-13. `next/link` for internal links, and `rel="noopener noreferrer"` on external ones.
+8. Hero: `leading-1`, the undersized surname image and its wrong alt text, and `90vh` (`home/Hero.tsx`). BentoGrid tiles use `alt="project"` and an overlay behind the non-existent `3xl` breakpoint.
+9. Card text under 16px/14px, the title row squeezing, and the featured card clipping its text (`projects/ProjectCard.tsx`).
+10. Focus ring, skip link, one `<h1>` per page, `<dl>` for project meta.
 
 **P2: consistency and cleanup**
 
-14. Put the colour, type, radius and motion tokens in `globals.css`, and remove the unused shadcn and dark-mode tokens, the Inter import, `.text-w-full` and `tw-animate-css`.
-15. Build `Container`, `Section`, `SectionHeading`, `Button`, `TextLink` and `Tag`, and move the existing pages onto them.
-16. Style `error.tsx` and `not-found.tsx`.
+11. Move headings and copy onto the type-scale roles, replacing one-off `text-[clamp(…)]` and `leading-[…]` values.
+12. Build `Container`, `Section`, `SectionHeading`, `Button` and `TextLink`, and move the existing pages onto them.
+13. Style `error.tsx` and `not-found.tsx`.
+
+**Features to build**
+
+14. Default `ProjectCard` video reveal: on hover, over the blurred image, fade in the project's `video` (muted, looping, `poster` set) and play it; pause and fade out on leave. Cards without a `video` keep the blur only. Touch devices and reduced motion show the static image (`projects/ProjectCard.tsx`).
