@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/mdx';
 import { compileMDX } from 'next-mdx-remote/rsc';
-import TableOfContents from '@/components/ui/TableOfContents';
+import TableOfContents from '@/components/blog/TableOfContents';
 
 export async function generateStaticParams() {
     const slugs = getAllBlogSlugs();

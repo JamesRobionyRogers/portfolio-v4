@@ -140,7 +140,7 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
 
   return (
         <div
-            className={`relative overflow-hidden rounded-lg lg:rounded-2xl bg-neutral-900 text-white cursor-pointer transition-transform duration-200 motion-safe:hover:scale-[1.01] ${
+            className={`relative overflow-hidden rounded-lg lg:rounded-2xl bg-ink text-ink-fg cursor-pointer transition-transform duration-200 motion-safe:hover:scale-[1.01] ${
                 mobile ? "aspect-[16/9]" : ""
             }`}
             style={!mobile ? style : undefined}
@@ -152,7 +152,7 @@ const Card = ({ item, mobile }: { item: BentoItem; mobile?: boolean }) => {
 
                 <div className="hidden 3xl:flex relative p-4 flex-col justify-end h-full">
                     <h2 className="text-lg font-semibold">{project.title}</h2>
-                    <p className="text-sm text-neutral-300 line-clamp-2">
+                    <p className="text-sm text-ink-muted line-clamp-2">
                         {project.description}
                     </p>
                 </div>
