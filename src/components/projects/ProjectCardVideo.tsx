@@ -56,8 +56,8 @@ const ProjectCardVideo = ({ src, poster }: { src: string; poster?: string }) => 
       disablePictureInPicture
       aria-hidden
       tabIndex={-1}
-      // Enters after the image's 800ms blur finishes; leaves at once and faster
-      className={`pointer-events-none absolute top-1/2 left-1/2 w-5/6 aspect-video -translate-1/2 rounded-lg lg:rounded-xl object-cover shadow-2xl shadow-black/60 transition-[opacity,scale] ease-out ${active ? 'opacity-100 scale-100 duration-1000 delay-800' : 'opacity-0 scale-95 duration-500'}`}
+      // Enters as the image's 800ms blur settles; leaves at once and faster
+      className={`pointer-events-none absolute top-1/2 left-1/2 w-5/6 aspect-video -translate-1/2 rounded-lg lg:rounded-xl object-cover shadow-2xl shadow-black/60 transition-[opacity,scale] ease-out ${active ? 'opacity-100 scale-100 duration-800 delay-500' : 'opacity-0 scale-95 duration-500'}`}
     />
   )
 }

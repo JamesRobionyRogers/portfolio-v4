@@ -118,7 +118,7 @@ Rules:
 
 Rules:
 
-- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the video reveal. Transition `scale` and `filter`, not `transform`: Tailwind v4's `scale-*` sets the `scale` property. The video waits for the blur (`delay-800`), then fades and grows in over `duration-1000 ease-out`, and fades out over `duration-500` on leave. Other card variants use `group-hover:scale-105`.
+- The default card's image hover is `group-hover:scale-110 group-hover:blur-[5px]` at `duration-800`; the blur is the backdrop for the video reveal. Transition `scale` and `filter`, not `transform`: Tailwind v4's `scale-*` sets the `scale` property. The video waits for the blur to mostly settle (`delay-500`), then fades and grows in over `duration-800 ease-out`, and fades out over `duration-500` on leave. Other card variants use `group-hover:scale-105`.
 - Transition only the properties you animate (`transition-colors`, `transition-transform`), not `transition-all`.
 - **Reduced motion is required.** The marquees use `motion-safe:animate-marquee`, and there is a global fallback:
 
