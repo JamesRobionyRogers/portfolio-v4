@@ -30,6 +30,15 @@
 @theme inline {
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --animate-reel-progress: reel-progress var(--stage) linear forwards;
+  @keyframes reel-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
   @keyframes marquee {
     from {
       transform: translateX(0);

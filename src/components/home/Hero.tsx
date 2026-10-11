@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-import { BentoGrid } from '@/components/projects/ProjectBentoGrid'
+import { ProjectReel } from '@/components/projects/ProjectReel'
 import { projects } from '@/lib/projects'
 
 const Hero = () => {
@@ -20,8 +20,8 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col flex-1 gap-4 sm:mb-10">
-                <div className="relative my-auto bg-ink rounded-xl flex-grow sm:aspect-video overflow-hidden shadow-2xl">
-                    <BentoGrid projects={projects} />
+                <div className="relative my-auto bg-ink rounded-xl flex-grow min-h-[60svh] sm:min-h-0 sm:aspect-video overflow-hidden shadow-2xl">
+                    <ProjectReel projects={projects} />
                 </div>
                 <div className="flex justify-between">
                     <p className="text-lg font-medium leading-[1] text-center md:text-left">↓ Check out </p>
