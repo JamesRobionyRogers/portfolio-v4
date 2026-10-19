@@ -79,11 +79,11 @@ export function ProjectReel({ projects }: { projects: Project[] }) {
         />
       ))}
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/10 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
       <Link
         href={projectHref(current)}
-        className="group absolute inset-0 flex flex-col justify-start gap-1 p-4 pt-16 lg:p-8 lg:pt-20 text-ink-fg rounded-xl lg:rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+        className="group absolute inset-0 flex flex-col justify-end gap-1 p-4 lg:p-8 text-ink-fg rounded-xl lg:rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
       >
         <span className="text-sm font-medium uppercase tracking-wide text-ink-muted">
           {current.type} · {current.year}
